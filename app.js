@@ -1,0 +1,11 @@
+let canvas = document.querySelector('canvas');
+let context = canvas.getContext('2d');
+console.log(context);
+console.log('Hello World');
+context.beginPath();
+context.arc(100,100,30,0,2*Math.PI,false);
+context.fillStyle = 'blue';
+context.fill();
+context.strokeStyle = 'yellow';
+context.lineWidth = 5;
+context.stroke();
