@@ -2,7 +2,7 @@
 
 const canvasWidth = 1000;
 const canvasHeight = 700;
-const maxParticles = 30;
+const maxParticles = 100;
 const colors = ['red', 'green', 'blue'];
 const forceConstant = 100;
 const colorForceRange = 100;
@@ -44,7 +44,7 @@ function generateParticles() {
             r: 4,
             vx: 0,
             vy: 0,
-            color: randomColor,
+            color: 'red',//randomColor,
         };
 
         particles.push(particle);
@@ -106,9 +106,9 @@ function applyForceAllToOne (particle) {
     function applyForce (otherParticle) {
         if (otherParticle === particle) return;
 
-        push('red', 'blue', 0.5, otherParticle);
+        push('red', 'red', 0.5, otherParticle);
         //push('blue', 'red', otherParticle);
-        push('blue', 'blue', 0.5, otherParticle);
+       // push('blue', 'blue', 0.5, otherParticle);
         //push('blue', 'red', otherParticle);
         //push('green', 'red', otherParticle);
         //push('red', 'red', otherParticle);
