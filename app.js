@@ -2,11 +2,11 @@
 
 const canvasWidth = 1000;
 const canvasHeight = 700;
-const maxParticles = 70;
+const maxParticles = 120;
 const colors = ['red', 'green', 'blue'];
 const forceConstant = 100;
 const colorForceRange = 400;
-const universalPushForceRange = 20;
+const universalPushForceRange = 40;
 // How much velocity decreases every frame
 const frictionConstant = 0.9;
 
@@ -82,19 +82,22 @@ function renderParticle (particle) {
     context.arc(particle.x, particle.y, particle.r, 0, 2 * Math.PI, false);
     context.fillStyle = particle.color;
     context.fill();
-    
+ 
     context.beginPath();
     context.setLineDash([]);
     context.arc(particle.x, particle.y, universalPushForceRange/2, 0, 2 * Math.PI , false);
     context.strokeStyle = particle.color;
     context.stroke();
     
+    /* 
     context.beginPath();
     context.setLineDash([5, 15]);
     context.arc(particle.x, particle.y, colorForceRange/2, 0, 2 * Math.PI , false);
     context.strokeStyle = particle.color;
     context.stroke();
+*/
 }
+
 
 function moveParticle (particle) {
     particle.x += particle.vx;
@@ -123,13 +126,16 @@ function applyForceAllToOne (particle) {
         if (dist < universalPushForceRange) {
             universalPush(particle, otherParticle);
         }
-
+/*
         if (dist < colorForceRange) {
             pull('green', 'green', 0.32, otherParticle);
             pull('green', 'red', 0.17, otherParticle);
+            push('green', 'blue', 0.34, otherParticle);
+            pull('red', 'green', 0.34, otherParticle);
         }
-
+ */       
         /*
+        pull('blue', 'green', 0.17, otherParticle);
         push('green','green', 0.5, otherParticle);
         push('green', 'blue', 0.5, otherParticle);
         push('green','red', 0.5, otherParticle);
@@ -148,7 +154,21 @@ function applyForceAllToOne (particle) {
     }
 
     function universalPush(particle, otherParticle) {
-        applyColorForce(particle, otherParticle, 1);
+        const distX = particle.x - otherParticle.x;
+        const distY = particle.y - otherParticle.y;
+        const dist = Math.sqrt(distX * distX + distY * distY);
+/*
+        if (dist > colorForceRange) return;
+
+        */
+        const xDirection = distX / dist;
+        const yDirection = distY / dist;
+        const force = forceConstant / dist * 0.2;
+        const forceX = xDirection * force;
+        const forceY = yDirection * force;
+        particle.vx = (particle.vx + forceX) * 0.2;
+        particle.vy = (particle.vy + forceY) * 0.2;
+   
     }
 
     function push(color1, color2, sila, otherParticle) {
