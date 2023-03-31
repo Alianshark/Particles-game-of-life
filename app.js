@@ -5,6 +5,10 @@ const canvasHeight = 700;
 const maxParticles = 150;
 const colors = ['red', 'green', 'blue'];
 const forceConstant = 100;
+
+// How much velocity decreases every frame
+const frictionConstant = 0.9;
+
 const fpsDiv = document.querySelector('#fps');
 
 let framesPerSecond = 0;
@@ -109,8 +113,8 @@ function applyForceAllToOne (particle) {
     const forceX = xDirection * force;
     const forceY = yDirection * force;
 
-    particle.vx = (particle.vx + forceX) * 0.9;
-    particle.vy = (particle.vy + forceY) * 0.9;
+    particle.vx = (particle.vx + forceX) * frictionConstant;
+    particle.vy = (particle.vy + forceY) * frictionConstant;
   }
 }
 
