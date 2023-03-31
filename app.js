@@ -2,6 +2,7 @@
 
 const canvasWidth = 1000;
 const canvasHeight = 700;
+const maxParticles = 100;
 let particles = [];
 
 let particle = {
@@ -13,9 +14,11 @@ let particle = {
 };
 
 let numP = 0;
-while (numP < 100) {
+while (numP < maxParticles) {
+    const promezhytok = canvasWidth / maxParticles;
+
     let particle = {
-        x: canvasWidth,
+        x: promezhytok * numP,
         y: 10,
         r: 10,
         vx: 10,
