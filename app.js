@@ -2,16 +2,8 @@
 
 const canvasWidth = 1000;
 const canvasHeight = 700;
-const maxParticles = 100;
+const maxParticles = 10;
 let particles = [];
-
-let particle = {
-    x: 10,
-    y: 10,
-    r: 10,
-    vx: 10,
-    vy: 10,
-};
 
 let numP = 0;
 while (numP < maxParticles) {
@@ -30,9 +22,6 @@ while (numP < maxParticles) {
     numP += 1;
 }
 
-console.log('Generated particles: ', particles);
-
-
 let canvas = document.querySelector('canvas');
 let context = canvas.getContext('2d');
 
@@ -45,9 +34,9 @@ function gameLoop() {
     setTimeout(gameLoop, 1000/60);
     
     clearScreen();
-    renderParticle();
-    moveParticle();
-    reflection();    
+    particles.forEach(renderParticle);
+    particles.forEach(moveParticle);
+    particles.forEach(reflection);    
 }
 
 function clearScreen () {
@@ -55,19 +44,19 @@ function clearScreen () {
     context.fillRect(0,0,canvasWidth,canvasHeight); 
 }
 
-function renderParticle () {
+function renderParticle (particle) {
     context.beginPath();
     context.arc(particle.x,particle.y,particle.r,0,2*Math.PI,false);
     context.fillStyle = 'blue';
     context.fill();
 }
 
-function moveParticle () {
+function moveParticle (particle) {
     particle.x += particle.vx;
     particle.y += particle.vy;
 }
 
-function reflection () {
+function reflection (particle) {
     if (particle.x < 0 || particle.x > canvasWidth) {
         particle.vx = particle.vx * (-1);
     }
