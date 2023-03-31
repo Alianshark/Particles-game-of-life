@@ -80,7 +80,7 @@ function renderParticle (particle) {
     context.fill();
  
     //drawUniversalForce(particle);
-    //drawColorForce(particle);
+    drawColorForce(particle);
 }
 
 function drawUniversalForce(particle) {
@@ -160,10 +160,10 @@ function applyForceAllToOne (particle) {
         universalForce();
 
         if (dist < universalPushForceRange) {
-            //universalPush(particle, otherParticle, 0.6);
+            universalPush(particle, otherParticle, 0.6);
         } else if (dist < colorForceRange) {
-            //pull('red', 'red', 2, otherParticle);
-            //pull('red', 'green', 1, otherParticle);
+            pull('red', 'red', 0.1, otherParticle);
+            pull('red', 'green', 1, otherParticle);
             //push('green','red', 1, otherParticle);
 
             //pull('green', 'green', 0.05, otherParticle);
