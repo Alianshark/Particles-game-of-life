@@ -2,7 +2,7 @@
 
 const canvasWidth = 1000;
 const canvasHeight = 700;
-const maxParticles = 30;
+const maxParticles = 70;
 const colors = ['red', 'green', 'blue'];
 const forceConstant = 100;
 const colorForceRange = 400;
@@ -125,7 +125,8 @@ function applyForceAllToOne (particle) {
         }
 
         if (dist < colorForceRange) {
-            pull('blue', 'blue', 0.5, otherParticle);
+            pull('green', 'green', 0.32, otherParticle);
+            pull('green', 'red', 0.17, otherParticle);
         }
 
         /*
@@ -147,7 +148,7 @@ function applyForceAllToOne (particle) {
     }
 
     function universalPush(particle, otherParticle) {
-        applyColorForce(particle, otherParticle, 0.5);
+        applyColorForce(particle, otherParticle, 1);
     }
 
     function push(color1, color2, sila, otherParticle) {
