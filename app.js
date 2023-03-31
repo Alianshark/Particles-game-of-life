@@ -2,11 +2,12 @@
 
 const canvasWidth = 1000;
 const canvasHeight = 700;
-const maxParticles = 120;
+const maxParticles = 500;
 const colors = ['red', 'green', 'blue'];
-const forceConstant = 100;
-const colorForceRange = 400;
-const universalPushForceRange = 40;
+const forceConstant = 1000;
+const colorForceRange = 100;
+const universalPushForceRange = 20;
+const radius = canvasHeight / 4;
 
 const fpsDiv = document.querySelector('#fps');
 
@@ -16,7 +17,7 @@ let particles = [];
 
 let context = createContext();
 generateParticles('red');
-generateParticles('green');
+//generateParticles('green');
 generateParticles('blue')
 requestAnimationFrame(gameLoop);
 setInterval(measureFps, 1000);
@@ -124,6 +125,9 @@ function applyForceAllToOne (particle) {
 
         if (dist < universalPushForceRange) {
             universalPush(particle, otherParticle);
+        } else if (dist < colorForceRange) {
+            pull('red', 'red', 0.05, otherParticle);
+            pull('red', 'blue', 0.05, otherParticle);
         }
 /*
         if (dist < colorForceRange) {
