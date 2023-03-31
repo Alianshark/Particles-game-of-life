@@ -2,9 +2,9 @@
 
 const canvasWidth = 1000;
 const canvasHeight = 700;
-const maxParticles = 2500;
+const maxParticles = 200;
 const colors = ['red', 'green', 'blue'];
-
+const forceConstant = 10;
 const fpsDiv = document.querySelector('#fps');
 
 let framesPerSecond = 0;
@@ -38,8 +38,8 @@ function generateParticles() {
             x: Math.random() * canvasWidth,
             y: Math.random() * canvasHeight,
             r: 10,
-            vx: 10,
-            vy: 10,
+            vx: 0,
+            vy: 0,
             color: randomColor,
         };
 
@@ -56,7 +56,8 @@ function gameLoop() {
     clearScreen();
     particles.forEach(renderParticle);
     particles.forEach(moveParticle);
-    particles.forEach(reflection);    
+    particles.forEach(reflection);
+    particles.forEach(applyForceAllToOne);
 }
 
 function measureFps() {
@@ -71,7 +72,7 @@ function clearScreen () {
 
 function renderParticle (particle) {
     context.beginPath();
-    context.arc(particle.x,particle.y,particle.r,0,2*Math.PI,false);
+    context.arc(particle.x, particle.y, particle.r, 0, 2 * Math.PI, false);
     context.fillStyle = particle.color;
     context.fill();
 }
@@ -88,5 +89,26 @@ function reflection (particle) {
     if (particle.y < 0 || particle.y > canvasHeight) {
         particle.vy = particle.vy * (-1);
     }
+}
+
+function applyForceAllToOne (particle) {
+  particles.forEach(applyForce);
+
+  function applyForce (otherParticle) {
+    if (otherParticle === particle) return;
+
+    const distX = particle.x - otherParticle.x;
+    const distY = particle.y - otherParticle.y;
+    const dist = Math.sqrt(distX * distX + distY * distY);
+
+    const xDirection = distX / dist;
+    const yDirection = distY / dist;
+    const force = forceConstant / dist;
+    const forceX = xDirection * force;
+    const forceY = yDirection * force;
+
+    particle.vx += forceX;
+    particle.vy += forceY;
+  }
 }
 
