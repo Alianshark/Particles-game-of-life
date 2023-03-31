@@ -18,7 +18,7 @@ let particles = [];
 let context = createContext();
 generateParticles('red');
 //generateParticles('green');
-generateParticles('blue')
+//generateParticles('blue')
 requestAnimationFrame(gameLoop);
 setInterval(measureFps, 1000);
 
@@ -77,7 +77,7 @@ function renderParticle (particle) {
     context.fillStyle = particle.color;
     context.fill();
  
-    drawUniversalForce(particle);
+    //drawUniversalForce(particle);
     //drawColorForce(particle);
 }
 
@@ -124,10 +124,11 @@ function applyForceAllToOne (particle) {
         const dist = Math.sqrt(distX * distX + distY * distY);
 
         if (dist < universalPushForceRange) {
-            universalPush(particle, otherParticle);
+            //universalPush(particle, otherParticle);
+            push('red', 'red', 0.05/2, otherParticle);
         } else if (dist < colorForceRange) {
             pull('red', 'red', 0.05, otherParticle);
-            pull('red', 'blue', 0.05, otherParticle);
+           // pull('red', 'blue', 0.05, otherParticle);
         }
 /*
         if (dist < colorForceRange) {
