@@ -101,12 +101,13 @@ function applyForceAllToOne (particle) {
     function applyForce (otherParticle) {
         if (otherParticle === particle) return;
 
-        rule('blue', 'red', otherParticle);
-        rule('red', 'blue', otherParticle);
+        push('blue', 'red', otherParticle);
+        push('green', 'red', otherParticle);
+        push('red', 'red', otherParticle);
     }
 
-    function rule(color1, color2, otherParticle) {
-        if (particle.color === color1 && otherParticle.color === color2) {
+    function push(color1, color2, otherParticle) {
+        if (otherParticle.color === color1 && particle.color === color2) {
             applyColorForce(particle, otherParticle);
         }
     }
