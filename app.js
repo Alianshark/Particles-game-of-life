@@ -7,19 +7,17 @@ let particle = {
  vx: 10,
  vy: 10,
 }
+
 let canvas = document.querySelector('canvas');
 let context = canvas.getContext('2d');
 
-function start () {
-    
-    canvas.width = '1000';
-    canvas.height = '700';
-    
-    console.log(context);
-    console.log('Hello World');
+canvas.width = '1000';
+canvas.height = '700';
 
-    gameLoop();
-}
+console.log(context);
+console.log('Hello World');
+
+gameLoop();
 
 function gameLoop() {
     setTimeout(gameLoop, 1000/60);
@@ -47,5 +45,3 @@ function gameLoop() {
     }
     
 }
-
-window.onload = start;
