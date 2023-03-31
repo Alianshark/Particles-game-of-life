@@ -4,7 +4,7 @@ const canvasWidth = 1000;
 const canvasHeight = 700;
 const maxParticles = 200;
 const colors = ['red', 'green', 'blue'];
-const forceConstant = 10;
+const forceConstant = 1;
 const fpsDiv = document.querySelector('#fps');
 
 let framesPerSecond = 0;
@@ -56,8 +56,8 @@ function gameLoop() {
     clearScreen();
     particles.forEach(renderParticle);
     particles.forEach(moveParticle);
-    particles.forEach(reflection);
     particles.forEach(applyForceAllToOne);
+    particles.forEach(reflection);
 }
 
 function measureFps() {
