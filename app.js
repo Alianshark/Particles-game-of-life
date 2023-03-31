@@ -5,7 +5,8 @@ const canvasHeight = 700;
 const maxParticles = 30;
 const colors = ['red', 'green', 'blue'];
 const forceConstant = 100;
-const colorForceRange = 100;
+const colorForceRange = 400;
+const universalPushForceRange = 20;
 // How much velocity decreases every frame
 const frictionConstant = 0.9;
 
@@ -81,8 +82,15 @@ function renderParticle (particle) {
     context.arc(particle.x, particle.y, particle.r, 0, 2 * Math.PI, false);
     context.fillStyle = particle.color;
     context.fill();
-
+    
     context.beginPath();
+    context.setLineDash([]);
+    context.arc(particle.x, particle.y, universalPushForceRange/2, 0, 2 * Math.PI , false);
+    context.strokeStyle = particle.color;
+    context.stroke();
+    
+    context.beginPath();
+    context.setLineDash([5, 15]);
     context.arc(particle.x, particle.y, colorForceRange/2, 0, 2 * Math.PI , false);
     context.strokeStyle = particle.color;
     context.stroke();
@@ -107,8 +115,18 @@ function applyForceAllToOne (particle) {
 
     function applyForce (otherParticle) {
         if (otherParticle === particle) return;
+        
+        const distX = particle.x - otherParticle.x;
+        const distY = particle.y - otherParticle.y;
+        const dist = Math.sqrt(distX * distX + distY * distY);
 
-        universalPush(particle, otherParticle);
+        if (dist < universalPushForceRange) {
+            universalPush(particle, otherParticle);
+        }
+
+        if (dist < colorForceRange) {
+            pull('blue', 'blue', 0.5, otherParticle);
+        }
 
         /*
         push('green','green', 0.5, otherParticle);
@@ -119,7 +137,6 @@ function applyForceAllToOne (particle) {
         push('red', 'green', 0.5, otherParticle);
         push('blue', 'blue', 0.5, otherParticle);
         push('blue', 'red', 0.5, otherParticle);
-        push('blue', 'green', 0.5, otherParticle);
         */
         
         //push('blue', 'red', otherParticle);
