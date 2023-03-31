@@ -4,7 +4,7 @@ const canvasWidth = 1000;
 const canvasHeight = 700;
 const maxParticles = 500;
 const colors = ['red', 'green', 'blue'];
-const forceConstant = 1000;
+const forceConstant = 100;
 const colorForceRange = 100;
 const universalPushForceRange = 20;
 const radius = canvasHeight / 4;
@@ -124,8 +124,7 @@ function applyForceAllToOne (particle) {
         const dist = Math.sqrt(distX * distX + distY * distY);
 
         if (dist < universalPushForceRange) {
-            //universalPush(particle, otherParticle);
-            push('red', 'red', 0.05/2, otherParticle);
+            universalPush(particle, otherParticle);
         } else if (dist < colorForceRange) {
             pull('red', 'red', 0.05, otherParticle);
            // pull('red', 'blue', 0.05, otherParticle);
@@ -147,10 +146,10 @@ function applyForceAllToOne (particle) {
 
         const xDirection = distX / dist;
         const yDirection = distY / dist;
-        const force = forceConstant / dist * 0.2;
+        const force = forceConstant / dist * 0.05/2;
         const forceX = xDirection * force;
         const forceY = yDirection * force;
-        const frictionConstant = 0.2;
+        const frictionConstant = 0.9;
         particle.vx = (particle.vx + forceX) * frictionConstant;
         particle.vy = (particle.vy + forceY) * frictionConstant;
    
