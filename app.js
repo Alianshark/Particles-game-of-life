@@ -2,9 +2,9 @@
 
 const canvasWidth = 1000;
 const canvasHeight = 700;
-const maxParticles = 200;
+const maxParticles = 80;
 const colors = ['red', 'green', 'blue'];
-const forceConstant = 1;
+const forceConstant = 100;
 const fpsDiv = document.querySelector('#fps');
 
 let framesPerSecond = 0;
@@ -109,8 +109,8 @@ function applyForceAllToOne (particle) {
     const forceX = xDirection * force;
     const forceY = yDirection * force;
 
-    particle.vx += forceX;
-    particle.vy += forceY;
+    particle.vx = (particle.vx + forceX) * 0.5;
+    particle.vy = (particle.vy + forceY) * 0.5;
   }
 }
 
