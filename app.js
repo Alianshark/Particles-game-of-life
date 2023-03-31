@@ -127,7 +127,7 @@ function applyForceAllToOne (particle) {
             universalPush(particle, otherParticle);
         } else if (dist < colorForceRange) {
             pull('red', 'red', 0.5, otherParticle);
-            pull('red', 'green', 0.01, otherParticle);
+            pull('red', 'green', 1, otherParticle);
             //push('red', 'green', 0.2, otherParticle);
         }
 /*
