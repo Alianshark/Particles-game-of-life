@@ -17,8 +17,8 @@ while (numP < maxParticles) {
     const randomColor = colors[randomColorIndex];
 
     let particle = {
-        x: promezhytok * numP,
-        y: 10,
+        x: Math.random() * canvasWidth,
+        y: Math.random() * canvasHeight,
         r: 10,
         vx: 10,
         vy: 10,
