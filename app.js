@@ -11,42 +11,42 @@ let framesPerSecond = 0;
 
 let particles = [];
 
-let numP = 0;
-while (numP < maxParticles) {
-    const promezhytok = canvasWidth / maxParticles;
-
-    // random color index is 0, 1, 2
-    const randomColorIndex = Math.round(Math.random() * 3);
-    // random color is 'red', 'green', 'blue'
-    const randomColor = colors[randomColorIndex];
-
-    let particle = {
-        x: Math.random() * canvasWidth,
-        y: Math.random() * canvasHeight,
-        r: 10,
-        vx: 10,
-        vy: 10,
-        color: randomColor,
-    };
-
-    particles.push(particle);
-
-    numP += 1;
-}
-
-let canvas = document.querySelector('canvas');
-let context = canvas.getContext('2d');
-
-canvas.width = canvasWidth;
-canvas.height = canvasHeight;
-
+let context = createContext();
+generateParticles();
 requestAnimationFrame(gameLoop);
-
 setInterval(measureFps, 1000);
 
-function measureFps() {
-    fpsDiv.innerHTML = 'fps: ' + framesPerSecond;
-    framesPerSecond = 0;
+function createContext() {
+    let canvas = document.querySelector('canvas');
+    let context = canvas.getContext('2d');
+    
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+
+    return context;
+}
+
+function generateParticles() {
+    let numP = 0;
+    while (numP < maxParticles) {
+        // random color index is 0, 1, 2
+        const randomColorIndex = Math.round(Math.random() * 3);
+        // random color is 'red', 'green', 'blue'
+        const randomColor = colors[randomColorIndex];
+
+        let particle = {
+            x: Math.random() * canvasWidth,
+            y: Math.random() * canvasHeight,
+            r: 10,
+            vx: 10,
+            vy: 10,
+            color: randomColor,
+        };
+
+        particles.push(particle);
+
+        numP += 1;
+    }
 }
 
 function gameLoop() {
@@ -57,6 +57,11 @@ function gameLoop() {
     particles.forEach(renderParticle);
     particles.forEach(moveParticle);
     particles.forEach(reflection);    
+}
+
+function measureFps() {
+    fpsDiv.innerHTML = 'fps: ' + framesPerSecond;
+    framesPerSecond = 0;
 }
 
 function clearScreen () {
