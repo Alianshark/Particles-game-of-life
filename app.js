@@ -2,11 +2,13 @@
 
 const canvasWidth = 1000;
 const canvasHeight = 700;
-const maxParticles = 500;
+const maxParticles = 300;
 const colors = ['red', 'green', 'blue'];
-const forceConstant = 100;
+const forceConstant = 10;
+const centerX = canvasWidth/2; 
+const centerY = canvasHeight/2; 
 const colorForceRange = 100;
-const universalPushForceRange = 40;
+const universalPushForceRange = 30;
 const radius = canvasHeight / 4;
 
 const fpsDiv = document.querySelector('#fps');
@@ -104,14 +106,30 @@ function moveParticle (particle) {
     particle.y += particle.vy;
 }
 
-function reflection (particle) {
+/*function reflection (particle) {
     if (particle.x < 0 || particle.x > canvasWidth) {
         particle.vx = particle.vx * (-1);
     }
     if (particle.y < 0 || particle.y > canvasHeight) {
         particle.vy = particle.vy * (-1);
     }
+}*/ //Normal flow before Nick
+
+function reflection (particle) {
+    if (particle.x < 0) {
+        particle.x = canvasWidth + particle.x
+    }
+    if (particle.x > canvasWidth) {
+        particle.x = 0 
+    }
+    if (particle.y < 0) {
+        particle.y = canvasHeight + particle.y
+    }
+    if (particle.y > canvasHeight) {
+        particle.y = 0 
+    }
 }
+
 
 function applyForceAllToOne (particle) {
     particles.forEach(applyForce);
@@ -123,12 +141,33 @@ function applyForceAllToOne (particle) {
         const distY = particle.y - otherParticle.y;
         const dist = Math.sqrt(distX * distX + distY * distY);
 
+        function universalForce() {
+
+            const distCenterX = particle.x - centerX;
+            const distCenterY = particle.y - centerY;
+            const distCenter = Math.sqrt(distCenterX * distCenterX + distCenterY * distCenterY);
+            const xDirection = distX / distCenter;
+            const yDirection = distY / distCenter;
+
+            const universalForceX = -xDirection * 0.0001;
+            const universalForceY = -yDirection * 0.0001;
+
+            const frictionConstant = 1;
+            particle.vx = (particle.vx + universalForceX) * frictionConstant;
+            particle.vy = (particle.vy + universalForceY) * frictionConstant;
+        }
+
+        universalForce();
+
         if (dist < universalPushForceRange) {
-            universalPush(particle, otherParticle, 0.01);
+            //universalPush(particle, otherParticle, 0.6);
         } else if (dist < colorForceRange) {
-            pull('red', 'red', 0.1, otherParticle);
-            pull('red', 'green', 1, otherParticle);
-            //push('red', 'green', 0.2, otherParticle);
+            //pull('red', 'red', 2, otherParticle);
+            //pull('red', 'green', 1, otherParticle);
+            //push('green','red', 1, otherParticle);
+
+            //pull('green', 'green', 0.05, otherParticle);
+            //pull('green', 'red', 1, otherParticle);
         }
 /*
         if (dist < colorForceRange) {
@@ -184,6 +223,7 @@ function applyForceAllToOne (particle) {
         const frictionConstant = 0.9;
         particle.vx = (particle.vx + forceX) * frictionConstant;
         particle.vy = (particle.vy + forceY) * frictionConstant;
+
     }
 }
 
