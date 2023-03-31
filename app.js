@@ -101,18 +101,25 @@ function applyForceAllToOne (particle) {
     function applyForce (otherParticle) {
         if (otherParticle === particle) return;
 
-        push('blue', 'red', otherParticle);
-        push('green', 'red', otherParticle);
-        push('red', 'red', otherParticle);
+        pull('red', 'blue', otherParticle);
+        //push('blue', 'red', otherParticle);
+        //push('green', 'red', otherParticle);
+        //push('red', 'red', otherParticle);
     }
 
     function push(color1, color2, otherParticle) {
         if (otherParticle.color === color1 && particle.color === color2) {
-            applyColorForce(particle, otherParticle);
+            applyColorForce(particle, otherParticle, +1);
         }
     }
 
-    function applyColorForce(particle, otherParticle) {
+    function pull(color1, color2, otherParticle) {
+        if (otherParticle.color === color1 && particle.color === color2) {
+            applyColorForce(particle, otherParticle, -1);
+        }
+    }
+
+    function applyColorForce(particle, otherParticle, znak) {
         const distX = particle.x - otherParticle.x;
         const distY = particle.y - otherParticle.y;
         const dist = Math.sqrt(distX * distX + distY * distY);
@@ -121,7 +128,7 @@ function applyForceAllToOne (particle) {
 
         const xDirection = distX / dist;
         const yDirection = distY / dist;
-        const force = forceConstant / dist;
+        const force = forceConstant / dist * znak;
         const forceX = xDirection * force;
         const forceY = yDirection * force;
 
