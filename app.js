@@ -2,7 +2,7 @@
 
 const canvasWidth = 1000;
 const canvasHeight = 700;
-const maxParticles = 100;
+const maxParticles = 30;
 const colors = ['red', 'green', 'blue'];
 const forceConstant = 100;
 const colorForceRange = 100;
@@ -16,7 +16,9 @@ let framesPerSecond = 0;
 let particles = [];
 
 let context = createContext();
-generateParticles();
+generateParticles('red');
+generateParticles('green');
+generateParticles('blue')
 requestAnimationFrame(gameLoop);
 setInterval(measureFps, 1000);
 
@@ -30,7 +32,7 @@ function createContext() {
     return context;
 }
 
-function generateParticles() {
+function generateParticles(color) {
     let numP = 0;
     while (numP < maxParticles) {
         // random color index is 0, 1, 2
@@ -44,7 +46,7 @@ function generateParticles() {
             r: 4,
             vx: 0,
             vy: 0,
-            color: 'red',//randomColor,
+            color: color,//randomColor,
         };
 
         particles.push(particle);
@@ -106,7 +108,16 @@ function applyForceAllToOne (particle) {
     function applyForce (otherParticle) {
         if (otherParticle === particle) return;
 
+        push('green','green', 0.5, otherParticle);
+        push('green', 'blue', 0.5, otherParticle);
+        push('green','red', 0.5, otherParticle);
         push('red', 'red', 0.5, otherParticle);
+        push('red', 'blue', 0.5, otherParticle);
+        push('red', 'green', 0.5, otherParticle);
+        push('blue', 'blue', 0.5, otherParticle);
+        push('blue', 'red', 0.5, otherParticle);
+        push('blue', 'green', 0.5, otherParticle);
+        
         //push('blue', 'red', otherParticle);
        // push('blue', 'blue', 0.5, otherParticle);
         //push('blue', 'red', otherParticle);
