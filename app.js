@@ -16,6 +16,15 @@ canvas.height = '700';
 
 gameLoop();
 
+function gameLoop() {
+    setTimeout(gameLoop, 1000/60);
+    
+    clearScreen();
+    renderParticle();
+    moveParticle();
+    reflection();    
+}
+
 function clearScreen () {
     context.fillStyle = '#777';
     context.fillRect(0,0,1000,700); 
@@ -42,13 +51,3 @@ function reflection () {
     }
 }
 
-function gameLoop() {
-    setTimeout(gameLoop, 1000/60);
-    
-    clearScreen();
-    renderParticle();
-    moveParticle();
-    reflection();
-
-    
-}
