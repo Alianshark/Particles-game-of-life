@@ -96,25 +96,31 @@ function reflection (particle) {
 }
 
 function applyForceAllToOne (particle) {
-  particles.forEach(applyForce);
+    particles.forEach(applyForce);
 
-  function applyForce (otherParticle) {
-    if (otherParticle === particle) return;
+    function applyForce (otherParticle) {
+        if (otherParticle === particle) return;
 
-    const distX = particle.x - otherParticle.x;
-    const distY = particle.y - otherParticle.y;
-    const dist = Math.sqrt(distX * distX + distY * distY);
+        if (particle.color === 'red' && otherParticle.color === 'red') {
+            applyColorForce(particle, otherParticle);
+        }
+    }
 
-    if (dist > 100) return;
+    function applyColorForce(particle, otherParticle) {
+        const distX = particle.x - otherParticle.x;
+        const distY = particle.y - otherParticle.y;
+        const dist = Math.sqrt(distX * distX + distY * distY);
 
-    const xDirection = distX / dist;
-    const yDirection = distY / dist;
-    const force = forceConstant / dist;
-    const forceX = xDirection * force;
-    const forceY = yDirection * force;
+        if (dist > 100) return;
 
-    particle.vx = (particle.vx + forceX) * frictionConstant;
-    particle.vy = (particle.vy + forceY) * frictionConstant;
-  }
+        const xDirection = distX / dist;
+        const yDirection = distY / dist;
+        const force = forceConstant / dist;
+        const forceX = xDirection * force;
+        const forceY = yDirection * force;
+
+        particle.vx = (particle.vx + forceX) * frictionConstant;
+        particle.vy = (particle.vy + forceY) * frictionConstant;
+    }
 }
 
