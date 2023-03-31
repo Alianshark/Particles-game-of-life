@@ -2,10 +2,10 @@
 
 const canvasWidth = 1000;
 const canvasHeight = 700;
-const maxParticles = 150;
+const maxParticles = 30;
 const colors = ['red', 'green', 'blue'];
 const forceConstant = 100;
-
+const colorForceRange = 100;
 // How much velocity decreases every frame
 const frictionConstant = 0.9;
 
@@ -79,6 +79,11 @@ function renderParticle (particle) {
     context.arc(particle.x, particle.y, particle.r, 0, 2 * Math.PI, false);
     context.fillStyle = particle.color;
     context.fill();
+
+    context.beginPath();
+    context.arc(particle.x, particle.y, colorForceRange/2, 0, 2 * Math.PI , false);
+    context.strokeStyle = particle.color;
+    context.stroke();
 }
 
 function moveParticle (particle) {
@@ -101,7 +106,9 @@ function applyForceAllToOne (particle) {
     function applyForce (otherParticle) {
         if (otherParticle === particle) return;
 
-        pull('red', 'blue', 0.1, otherParticle);
+        push('red', 'blue', 0.5, otherParticle);
+        //push('blue', 'red', otherParticle);
+        push('blue', 'blue', 0.5, otherParticle);
         //push('blue', 'red', otherParticle);
         //push('green', 'red', otherParticle);
         //push('red', 'red', otherParticle);
@@ -124,7 +131,7 @@ function applyForceAllToOne (particle) {
         const distY = particle.y - otherParticle.y;
         const dist = Math.sqrt(distX * distX + distY * distY);
 
-        if (dist > 100) return;
+        if (dist > colorForceRange) return;
 
         const xDirection = distX / dist;
         const yDirection = distY / dist;
