@@ -3,11 +3,18 @@
 const canvasWidth = 1000;
 const canvasHeight = 700;
 const maxParticles = 10;
+const colors = ['red', 'green', 'blue'];
+
 let particles = [];
 
 let numP = 0;
 while (numP < maxParticles) {
     const promezhytok = canvasWidth / maxParticles;
+
+    // random color index is 0, 1, 2
+    const randomColorIndex = Math.round(Math.random() * 3);
+    // random color is 'red', 'green', 'blue'
+    const randomColor = colors[randomColorIndex];
 
     let particle = {
         x: promezhytok * numP,
@@ -15,6 +22,7 @@ while (numP < maxParticles) {
         r: 10,
         vx: 10,
         vy: 10,
+        color: randomColor,
     };
 
     particles.push(particle);
@@ -47,7 +55,7 @@ function clearScreen () {
 function renderParticle (particle) {
     context.beginPath();
     context.arc(particle.x,particle.y,particle.r,0,2*Math.PI,false);
-    context.fillStyle = 'blue';
+    context.fillStyle = particle.color;
     context.fill();
 }
 
