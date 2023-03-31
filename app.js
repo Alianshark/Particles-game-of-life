@@ -16,12 +16,15 @@ canvas.height = '700';
 
 gameLoop();
 
+function clearScreen () {
+    context.fillStyle = '#777';
+    context.fillRect(0,0,1000,700); 
+}
+
 function gameLoop() {
     setTimeout(gameLoop, 1000/60);
     
-    context.fillStyle = '#777';
-    context.fillRect(0,0,1000,700); //ochistka
-    
+    clearScreen();
     context.beginPath();
     context.arc(particle.x,particle.y,particle.r,0,2*Math.PI,false);
     context.fillStyle = 'blue';
