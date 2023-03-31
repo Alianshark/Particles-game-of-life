@@ -109,8 +109,8 @@ function applyForceAllToOne (particle) {
     const forceX = xDirection * force;
     const forceY = yDirection * force;
 
-    particle.vx = (particle.vx + forceX) * 0.5;
-    particle.vy = (particle.vy + forceY) * 0.5;
+    particle.vx = (particle.vx + forceX) * 0.9;
+    particle.vy = (particle.vy + forceY) * 0.9;
   }
 }
 
