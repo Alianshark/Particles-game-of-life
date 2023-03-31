@@ -7,8 +7,6 @@ const colors = ['red', 'green', 'blue'];
 const forceConstant = 100;
 const colorForceRange = 400;
 const universalPushForceRange = 40;
-// How much velocity decreases every frame
-const frictionConstant = 0.9;
 
 const fpsDiv = document.querySelector('#fps');
 
@@ -36,18 +34,13 @@ function createContext() {
 function generateParticles(color) {
     let numP = 0;
     while (numP < maxParticles) {
-        // random color index is 0, 1, 2
-        const randomColorIndex = Math.round(Math.random() * 3);
-        // random color is 'red', 'green', 'blue'
-        const randomColor = colors[randomColorIndex];
-
         let particle = {
             x: Math.random() * canvasWidth,
             y: Math.random() * canvasHeight,
             r: 4,
             vx: 0,
             vy: 0,
-            color: color,//randomColor,
+            color: color,
         };
 
         particles.push(particle);
@@ -83,19 +76,25 @@ function renderParticle (particle) {
     context.fillStyle = particle.color;
     context.fill();
  
+    drawUniversalForce(particle);
+    //drawColorForce(particle);
+}
+
+function drawUniversalForce(particle) {
     context.beginPath();
     context.setLineDash([]);
     context.arc(particle.x, particle.y, universalPushForceRange/2, 0, 2 * Math.PI , false);
     context.strokeStyle = particle.color;
     context.stroke();
-    
-    /* 
+}
+
+function drawColorForce(particle) {
     context.beginPath();
     context.setLineDash([5, 15]);
     context.arc(particle.x, particle.y, colorForceRange/2, 0, 2 * Math.PI , false);
     context.strokeStyle = particle.color;
     context.stroke();
-*/
+    
 }
 
 
@@ -134,40 +133,21 @@ function applyForceAllToOne (particle) {
             pull('red', 'green', 0.34, otherParticle);
         }
  */       
-        /*
-        pull('blue', 'green', 0.17, otherParticle);
-        push('green','green', 0.5, otherParticle);
-        push('green', 'blue', 0.5, otherParticle);
-        push('green','red', 0.5, otherParticle);
-        push('red', 'red', 0.5, otherParticle);
-        push('red', 'blue', 0.5, otherParticle);
-        push('red', 'green', 0.5, otherParticle);
-        push('blue', 'blue', 0.5, otherParticle);
-        push('blue', 'red', 0.5, otherParticle);
-        */
-        
-        //push('blue', 'red', otherParticle);
-       // push('blue', 'blue', 0.5, otherParticle);
-        //push('blue', 'red', otherParticle);
-        //push('green', 'red', otherParticle);
-        //push('red', 'red', otherParticle);
     }
 
     function universalPush(particle, otherParticle) {
         const distX = particle.x - otherParticle.x;
         const distY = particle.y - otherParticle.y;
         const dist = Math.sqrt(distX * distX + distY * distY);
-/*
-        if (dist > colorForceRange) return;
 
-        */
         const xDirection = distX / dist;
         const yDirection = distY / dist;
         const force = forceConstant / dist * 0.2;
         const forceX = xDirection * force;
         const forceY = yDirection * force;
-        particle.vx = (particle.vx + forceX) * 0.2;
-        particle.vy = (particle.vy + forceY) * 0.2;
+        const frictionConstant = 0.2;
+        particle.vx = (particle.vx + forceX) * frictionConstant;
+        particle.vy = (particle.vy + forceY) * frictionConstant;
    
     }
 
@@ -196,6 +176,7 @@ function applyForceAllToOne (particle) {
         const forceX = xDirection * force;
         const forceY = yDirection * force;
 
+        const frictionConstant = 0.9;
         particle.vx = (particle.vx + forceX) * frictionConstant;
         particle.vy = (particle.vy + forceY) * frictionConstant;
     }
