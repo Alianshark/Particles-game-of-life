@@ -1,12 +1,32 @@
 'use strict';
 
+let particles = [];
+
 let particle = {
- x: 10,
- y: 10,
- r: 10,
- vx: 10,
- vy: 10,
+    x: 10,
+    y: 10,
+    r: 10,
+    vx: 10,
+    vy: 10,
+};
+
+let numP = 0;
+while (numP < 100) {
+    let particle = {
+        x: 10,
+        y: 10,
+        r: 10,
+        vx: 10,
+        vy: 10,
+    };
+
+    particles.push(particle);
+
+    numP += 1;
 }
+
+console.log('Generated particles: ', particles);
+
 
 let canvas = document.querySelector('canvas');
 let context = canvas.getContext('2d');
