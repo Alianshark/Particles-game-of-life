@@ -6,7 +6,7 @@ const maxParticles = 500;
 const colors = ['red', 'green', 'blue'];
 const forceConstant = 100;
 const colorForceRange = 100;
-const universalPushForceRange = 20;
+const universalPushForceRange = 40;
 const radius = canvasHeight / 4;
 
 const fpsDiv = document.querySelector('#fps');
@@ -67,7 +67,7 @@ function measureFps() {
 }
 
 function clearScreen () {
-    context.fillStyle = '#777';
+    context.fillStyle = '#000';
     context.fillRect(0,0,canvasWidth,canvasHeight); 
 }
 
@@ -124,7 +124,7 @@ function applyForceAllToOne (particle) {
         const dist = Math.sqrt(distX * distX + distY * distY);
 
         if (dist < universalPushForceRange) {
-            universalPush(particle, otherParticle);
+            universalPush(particle, otherParticle, 0.01);
         } else if (dist < colorForceRange) {
             pull('red', 'red', 0.1, otherParticle);
             pull('red', 'green', 1, otherParticle);
@@ -140,14 +140,14 @@ function applyForceAllToOne (particle) {
  */       
     }
 
-    function universalPush(particle, otherParticle) {
+    function universalPush(particle, otherParticle, sila) {
         const distX = particle.x - otherParticle.x;
         const distY = particle.y - otherParticle.y;
         const dist = Math.sqrt(distX * distX + distY * distY);
 
         const xDirection = distX / dist;
         const yDirection = distY / dist;
-        const force = forceConstant / dist * 0.05/2;
+        const force = forceConstant / dist * sila/2;
         const forceX = xDirection * force;
         const forceY = yDirection * force;
         const frictionConstant = 0.9;
