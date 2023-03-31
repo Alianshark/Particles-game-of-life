@@ -2,8 +2,12 @@
 
 const canvasWidth = 1000;
 const canvasHeight = 700;
-const maxParticles = 10;
+const maxParticles = 2000;
 const colors = ['red', 'green', 'blue'];
+
+const fpsDiv = document.querySelector('#fps');
+
+let framesPerSecond = 0;
 
 let particles = [];
 
@@ -38,7 +42,15 @@ canvas.height = canvasHeight;
 
 gameLoop();
 
+setInterval(measureFps, 1000);
+
+function measureFps() {
+    fpsDiv.innerHTML = 'fps: ' + framesPerSecond;
+    framesPerSecond = 0;
+}
+
 function gameLoop() {
+    framesPerSecond += 1;
     setTimeout(gameLoop, 1000/60);
     
     clearScreen();

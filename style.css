@@ -6,3 +6,9 @@ canvas {
     border: solid 1px black;
   
 }
+
+#fps {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
