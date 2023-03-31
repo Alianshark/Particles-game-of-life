@@ -1,5 +1,7 @@
 'use strict';
 
+const canvasWidth = 1000;
+const canvasHeight = 700;
 let particles = [];
 
 let particle = {
@@ -13,7 +15,7 @@ let particle = {
 let numP = 0;
 while (numP < 100) {
     let particle = {
-        x: 10,
+        x: canvasWidth,
         y: 10,
         r: 10,
         vx: 10,
@@ -31,8 +33,8 @@ console.log('Generated particles: ', particles);
 let canvas = document.querySelector('canvas');
 let context = canvas.getContext('2d');
 
-canvas.width = '1000';
-canvas.height = '700';
+canvas.width = canvasWidth;
+canvas.height = canvasHeight;
 
 gameLoop();
 
@@ -47,7 +49,7 @@ function gameLoop() {
 
 function clearScreen () {
     context.fillStyle = '#777';
-    context.fillRect(0,0,1000,700); 
+    context.fillRect(0,0,canvasWidth,canvasHeight); 
 }
 
 function renderParticle () {
@@ -63,10 +65,10 @@ function moveParticle () {
 }
 
 function reflection () {
-    if (particle.x < 0 || particle.x > 1000) {
+    if (particle.x < 0 || particle.x > canvasWidth) {
         particle.vx = particle.vx * (-1);
     }
-    if (particle.y < 0 || particle.y > 700) {
+    if (particle.y < 0 || particle.y > canvasHeight) {
         particle.vy = particle.vy * (-1);
     }
 }
