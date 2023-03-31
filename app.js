@@ -2,7 +2,7 @@
 
 const canvasWidth = 1000;
 const canvasHeight = 700;
-const maxParticles = 80;
+const maxParticles = 150;
 const colors = ['red', 'green', 'blue'];
 const forceConstant = 100;
 const fpsDiv = document.querySelector('#fps');
@@ -37,7 +37,7 @@ function generateParticles() {
         let particle = {
             x: Math.random() * canvasWidth,
             y: Math.random() * canvasHeight,
-            r: 10,
+            r: 4,
             vx: 0,
             vy: 0,
             color: randomColor,
