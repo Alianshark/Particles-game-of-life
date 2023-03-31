@@ -108,6 +108,9 @@ function applyForceAllToOne (particle) {
     function applyForce (otherParticle) {
         if (otherParticle === particle) return;
 
+        universalPush(particle, otherParticle);
+
+        /*
         push('green','green', 0.5, otherParticle);
         push('green', 'blue', 0.5, otherParticle);
         push('green','red', 0.5, otherParticle);
@@ -117,12 +120,17 @@ function applyForceAllToOne (particle) {
         push('blue', 'blue', 0.5, otherParticle);
         push('blue', 'red', 0.5, otherParticle);
         push('blue', 'green', 0.5, otherParticle);
+        */
         
         //push('blue', 'red', otherParticle);
        // push('blue', 'blue', 0.5, otherParticle);
         //push('blue', 'red', otherParticle);
         //push('green', 'red', otherParticle);
         //push('red', 'red', otherParticle);
+    }
+
+    function universalPush(particle, otherParticle) {
+        applyColorForce(particle, otherParticle, 0.5);
     }
 
     function push(color1, color2, sila, otherParticle) {
