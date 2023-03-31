@@ -101,6 +101,8 @@ function applyForceAllToOne (particle) {
     const distY = particle.y - otherParticle.y;
     const dist = Math.sqrt(distX * distX + distY * distY);
 
+    if (dist > 100) return;
+
     const xDirection = distX / dist;
     const yDirection = distY / dist;
     const force = forceConstant / dist;
