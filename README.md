@@ -1,4 +1,6 @@
-# git Particles game of life
+# Particles game of life
+
+![Demo](/Particles-game-of-life/img/out2.gif)
 
 ## How to start
 
@@ -19,4 +21,3 @@ npx http-server .
 
 ![Demo](out.gif)
 
-![Demo](/Particles-game-of-life/img/out2.gif)
