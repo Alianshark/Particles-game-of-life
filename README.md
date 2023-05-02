@@ -1,6 +1,6 @@
 # Particles game of life
 
-![Demo](/Particles-game-of-life/img/out2.gif)
+![Demo](out.gif)
 
 ## How to start
 
@@ -19,5 +19,5 @@ Run any server inside the project folder, for example
 npx http-server .
 ```
 
-![Demo](out.gif)
+![Demo](/Particles-game-of-life/img/out2.gif)
 
