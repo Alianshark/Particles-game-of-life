@@ -106,15 +106,6 @@ function moveParticle (particle) {
     particle.y += particle.vy;
 }
 
-/*function reflection (particle) {
-    if (particle.x < 0 || particle.x > canvasWidth) {
-        particle.vx = particle.vx * (-1);
-    }
-    if (particle.y < 0 || particle.y > canvasHeight) {
-        particle.vy = particle.vy * (-1);
-    }
-}*/ //Normal flow before Nick
-
 function reflection (particle) {
     if (particle.x < 0) {
         particle.x = canvasWidth + particle.x
@@ -129,7 +120,6 @@ function reflection (particle) {
         particle.y = 0 
     }
 }
-
 
 function applyForceAllToOne (particle) {
     particles.forEach(applyForce);
@@ -164,19 +154,7 @@ function applyForceAllToOne (particle) {
         } else if (dist < colorForceRange) {
             pull('red', 'red', 0.1, otherParticle);
             pull('red', 'green', 1, otherParticle);
-            //push('green','red', 1, otherParticle);
-
-            //pull('green', 'green', 0.05, otherParticle);
-            //pull('green', 'red', 1, otherParticle);
-        }
-/*
-        if (dist < colorForceRange) {
-            pull('green', 'green', 0.32, otherParticle);
-            pull('green', 'red', 0.17, otherParticle);
-            push('green', 'blue', 0.34, otherParticle);
-            pull('red', 'green', 0.34, otherParticle);
-        }
- */       
+        }    
     }
 
     function universalPush(particle, otherParticle, sila) {
