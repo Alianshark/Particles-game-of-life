@@ -20,7 +20,7 @@ Clone the project
 git clone https://github.com/Alianshark/Particles-game-of-life.git
 ```
 
-Change dir to the proejct folder
+Change dir to the project folder
 ```
 cd Particles-game-of-life
 ```
