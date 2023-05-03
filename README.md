@@ -1,4 +1,13 @@
-# Particles game of life
+# Particles Game of Life
+Game simulating "color" forces, inspired by Nuclear Physics.
+
+Based on youtube tutorials 🙂
+- [How Particle Life emerges from simplicity](https://www.youtube.com/watch?v=p4YirERTVF0)
+- [Artificial Particle Life - Simulation & Code](https://www.youtube.com/watch?v=0Kx4Y9TVMGg)
+
+
+## Live Demo
+https://alianshark.github.io/Particles-game-of-life/
 
 ![Demo](out.gif)
 
