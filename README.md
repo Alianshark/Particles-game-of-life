@@ -9,7 +9,7 @@ Based on youtube tutorials 🙂
 ## Live Demo
 https://alianshark.github.io/Particles-game-of-life/
 
-![Demo](out.gif)
+![Demo](readme-img/game-demo-1.gif)
 
 ## How to start
 
@@ -28,5 +28,5 @@ Run any server inside the project folder, for example
 npx http-server .
 ```
 
-![Demo](/Particles-game-of-life/img/out2.gif)
+![Demo](/Particles-game-of-life/readme-img/game-demo-2.gif)
 
