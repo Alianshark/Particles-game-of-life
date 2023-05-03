@@ -1,5 +1,6 @@
 # Particles Game of Life
 Game simulating "color" forces, inspired by Nuclear Physics.
+
 Game made with: JavaScript and Canvas.
 
 Based on youtube tutorials 🙂
