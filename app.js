@@ -50,9 +50,15 @@ function generateParticles(color) {
         
         const pixiCircle = createCircle(particle);
         particle.pixiCircle = pixiCircle;
+
         const forceCircle = createUniversalForceCircle(particle)
         particle.pixiCircle.forceCircle = forceCircle;
+
+        const pixiCircleColorForce = drawColorForce(particle)
+        particle.pixiCircle.pixiCircleColorForce = pixiCircleColorForce
+
         particles.push(particle);
+
 
         numP += 1;
     }
@@ -75,6 +81,8 @@ function renderPixiParticle (particle) {
     particle.pixiCircle.y = particle.y;
     particle.pixiCircle.forceCircle.x = particle.x;
     particle.pixiCircle.forceCircle.y = particle.y;
+    particle.pixiCircle.pixiCircleColorForce.x = particle.x;
+    particle.pixiCircle.pixiCircleColorForce.y = particle.y;
 }
 
 function measureFps() {
@@ -85,19 +93,19 @@ function measureFps() {
 function createUniversalForceCircle(particle) {
     const forceCircle  = new PIXI.Graphics();
     forceCircle.lineStyle(2, particle.color);
-    forceCircle.drawCircle(particle.x, particle.y, universalPushForceRange);
+    forceCircle.drawCircle(particle.x, particle.y, universalPushForceRange/2);
     forceCircle.endFill();
     app.stage.addChild(forceCircle)
     return forceCircle
 }
 
 function drawColorForce(particle) {
-    context.beginPath();
-    context.setLineDash([5, 15]);
-    context.arc(particle.x, particle.y, colorForceRange/2, 0, 2 * Math.PI , false);
-    context.strokeStyle = particle.color;
-    context.stroke();
-    
+    const forceCircle  = new PIXI.Graphics();
+    forceCircle.lineStyle(2, particle.color);
+    forceCircle.drawCircle(particle.x, particle.y, colorForceRange/2);
+    forceCircle.endFill();
+    app.stage.addChild(forceCircle)
+    return forceCircle
 }
 
 
