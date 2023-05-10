@@ -12,6 +12,15 @@ const universalPushForceRange = 30;
 const radius = canvasHeight / 4;
 let app = new PIXI.Application({ width: canvasWidth, height: canvasHeight });
 document.body.appendChild(app.view);
+function createCircle (x,y) { 
+    const circle  = new PIXI.Graphics();
+    circle.beginFill(0xffffff);
+    circle.drawCircle(x, y, 5);
+    circle.endFill();
+    app.stage.addChild(circle)
+}
+
+app.ticker.add(gameLoop)
 
 const fpsDiv = document.querySelector('#fps');
 
@@ -49,6 +58,7 @@ function generateParticles(color) {
             vy: 0,
             color: color,
         };
+        createCircle(particle.x, particle.y);
 
         particles.push(particle);
 
@@ -56,9 +66,10 @@ function generateParticles(color) {
     }
 }
 
+
+
 function gameLoop() {
     framesPerSecond += 1;
-    requestAnimationFrame(gameLoop);
     
     clearScreen();
     particles.forEach(renderParticle);
