@@ -13,10 +13,10 @@ const universalPushForceRange = 30;
 const radius = canvasHeight / 4;
 let app = new PIXI.Application({ width: canvasWidth, height: canvasHeight });
 document.body.appendChild(app.view);
-function createCircle (x,y) { 
+function createCircle (particle) { 
     const circle  = new PIXI.Graphics();
-    circle.beginFill(0xffffff);
-    circle.drawCircle(x, y, 5);
+    circle.beginFill(particle.color);
+    circle.drawCircle(particle.x, particle.y, 5);
     circle.endFill();
     app.stage.addChild(circle)
     return circle;
@@ -33,8 +33,7 @@ let particles = [];
 let context = createContext();
 
 generateParticles('red');
-
-//generateParticles('green');
+generateParticles('green');
 //generateParticles('blue')
 requestAnimationFrame(gameLoop);
 setInterval(measureFps, 1000);
@@ -56,12 +55,12 @@ function generateParticles(color) {
             x: Math.random() * canvasWidth,
             y: Math.random() * canvasHeight,
             r: 4,
-            vx: 1,
+            vx: 0,
             vy: 0,
             color: color,
         };
         
-        const pixiCircle = createCircle(particle.x, particle.y);
+        const pixiCircle = createCircle(particle);
         particle.pixiCircle = pixiCircle;
         
         
@@ -81,8 +80,8 @@ function gameLoop() {
     particles.forEach(renderPixiParticle);
     particles.forEach(moveParticle);
     
-   // particles.forEach(applyForceAllToOne);
-  //  particles.forEach(reflection);
+    particles.forEach(applyForceAllToOne);
+    particles.forEach(reflection);
 }
 
 function renderPixiParticle (particle) {
