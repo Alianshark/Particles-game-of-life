@@ -1,4 +1,5 @@
 'use strict';
+
 import * as PIXI from './node_modules/pixi.js/dist/pixi.mjs'
 const canvasWidth = 1000;
 const canvasHeight = 700;
@@ -18,6 +19,7 @@ function createCircle (x,y) {
     circle.drawCircle(x, y, 5);
     circle.endFill();
     app.stage.addChild(circle)
+    return circle;
 }
 
 app.ticker.add(gameLoop)
@@ -58,8 +60,11 @@ function generateParticles(color) {
             vy: 0,
             color: color,
         };
-        createCircle(particle.x, particle.y);
-
+        
+        const pixiCircle = createCircle(particle.x, particle.y);
+        particle.pixiCircle = pixiCircle;
+        
+        
         particles.push(particle);
 
         numP += 1;
@@ -73,9 +78,15 @@ function gameLoop() {
     
     clearScreen();
     particles.forEach(renderParticle);
+    particles.forEach(renderPixiParticle);
     particles.forEach(moveParticle);
+    
    // particles.forEach(applyForceAllToOne);
   //  particles.forEach(reflection);
+}
+
+function renderPixiParticle (particle) {
+    particle.pixiCircle.x = particle.x;
 }
 
 function measureFps() {
