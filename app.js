@@ -9,12 +9,9 @@ const canvasWidth = 1000;
 const canvasHeight = 700;
 const maxParticles = 500;
 const colors = ['red', 'green', 'blue'];
-const forceConstant = 10;
-const centerX = canvasWidth/2; 
-const centerY = canvasHeight/2; 
+const forceConstant = 10; 
 const colorForceRange = 100;
 const universalPushForceRange = 30;
-const radius = canvasHeight / 4;
 const fpsDiv = document.querySelector('#fps');
 let framesPerSecond = 0;
 let particles = [];
@@ -101,7 +98,7 @@ function createUniversalForceCircle(particle) {
 
 function drawColorForce(particle) {
     const forceCircle  = new PIXI.Graphics();
-    forceCircle.lineStyle(2, particle.color);
+    forceCircle.lineStyle(0.5, particle.color);
     forceCircle.drawCircle(particle.x, particle.y, colorForceRange/2);
     forceCircle.endFill();
     return forceCircle
@@ -137,24 +134,6 @@ function applyForceAllToOne (particle) {
         const distX = particle.x - otherParticle.x;
         const distY = particle.y - otherParticle.y;
         const dist = Math.sqrt(distX * distX + distY * distY);
-
-        function universalForce() {
-
-            const distCenterX = particle.x - centerX;
-            const distCenterY = particle.y - centerY;
-            const distCenter = Math.sqrt(distCenterX * distCenterX + distCenterY * distCenterY);
-            const xDirection = distX / distCenter;
-            const yDirection = distY / distCenter;
-
-            const universalForceX = -xDirection * 0.0001;
-            const universalForceY = -yDirection * 0.0001;
-
-            const frictionConstant = 1;
-            particle.vx = (particle.vx + universalForceX) * frictionConstant;
-            particle.vy = (particle.vy + universalForceY) * frictionConstant;
-        }
-
-        universalForce();
 
         if (dist < universalPushForceRange) {
             universalPush(particle, otherParticle, 0.6);
