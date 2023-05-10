@@ -25,9 +25,14 @@ Change dir to the project folder
 cd Particles-game-of-life
 ```
 
-Run any server inside the project folder, for example
+Install node packages
 ```
-npx http-server .
+npm install
+```
+
+Start the server 
+```
+npm start
 ```
 
 ![Demo](/Particles-game-of-life/readme-img/game-demo-2.gif)
