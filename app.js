@@ -1,34 +1,33 @@
 'use strict';
 
+
 import * as PIXI from './node_modules/pixi.js/dist/pixi.mjs'
+import { Container } from './node_modules/pixi.js/dist/pixi.mjs'
+
+
 const canvasWidth = 1000;
 const canvasHeight = 700;
 const maxParticles = 500;
 const colors = ['red', 'green', 'blue'];
-const forceConstant = 10;
-const centerX = canvasWidth/2; 
-const centerY = canvasHeight/2; 
+const forceConstant = 10; 
 const colorForceRange = 100;
 const universalPushForceRange = 30;
-const radius = canvasHeight / 4;
+const fpsDiv = document.querySelector('#fps');
+let framesPerSecond = 0;
+let particles = [];
+
 let app = new PIXI.Application({ width: canvasWidth, height: canvasHeight });
 document.body.appendChild(app.view);
+app.ticker.add(gameLoop)
+
+
 function createCircle (particle) { 
     const circle  = new PIXI.Graphics();
     circle.beginFill(particle.color);
     circle.drawCircle(particle.x, particle.y, particle.r);
     circle.endFill();
-    app.stage.addChild(circle)
     return circle;
 }
-
-app.ticker.add(gameLoop)
-
-const fpsDiv = document.querySelector('#fps');
-
-let framesPerSecond = 0;
-
-let particles = [];
 
 generateParticles('red');
 generateParticles('green');
@@ -47,18 +46,27 @@ function generateParticles(color) {
             vy: 0,
             color: color,
         };
+        const container = new Container();
+        app.stage.addChild(container)
+        particle.container = container;
         
         const pixiCircle = createCircle(particle);
         particle.pixiCircle = pixiCircle;
-        
-        
+        container.addChild(pixiCircle);
+
+        const forceCircle = createUniversalForceCircle(particle)
+        particle.pixiCircle.forceCircle = forceCircle;
+        container.addChild(forceCircle);
+
+        const pixiCircleColorForce = drawColorForce(particle)
+        particle.pixiCircle.pixiCircleColorForce = pixiCircleColorForce
+        container.addChild(pixiCircleColorForce);
+
         particles.push(particle);
 
         numP += 1;
     }
 }
-
-
 
 function gameLoop() {
     framesPerSecond += 1;
@@ -71,8 +79,8 @@ function gameLoop() {
 }
 
 function renderPixiParticle (particle) {
-    particle.pixiCircle.x = particle.x;
-    particle.pixiCircle.y = particle.y;
+    particle.container.x = particle.x;
+    particle.container.y = particle.y;
 }
 
 function measureFps() {
@@ -80,21 +88,20 @@ function measureFps() {
     framesPerSecond = 0;
 }
 
-function drawUniversalForce(particle) {
-    context.beginPath();
-    context.setLineDash([]);
-    context.arc(particle.x, particle.y, universalPushForceRange/2, 0, 2 * Math.PI , false);
-    context.strokeStyle = particle.color;
-    context.stroke();
+function createUniversalForceCircle(particle) {
+    const forceCircle  = new PIXI.Graphics();
+    forceCircle.lineStyle(2, particle.color);
+    forceCircle.drawCircle(particle.x, particle.y, universalPushForceRange/2);
+    forceCircle.endFill();
+    return forceCircle
 }
 
 function drawColorForce(particle) {
-    context.beginPath();
-    context.setLineDash([5, 15]);
-    context.arc(particle.x, particle.y, colorForceRange/2, 0, 2 * Math.PI , false);
-    context.strokeStyle = particle.color;
-    context.stroke();
-    
+    const forceCircle  = new PIXI.Graphics();
+    forceCircle.lineStyle(0.5, particle.color);
+    forceCircle.drawCircle(particle.x, particle.y, colorForceRange/2);
+    forceCircle.endFill();
+    return forceCircle
 }
 
 
@@ -128,24 +135,6 @@ function applyForceAllToOne (particle) {
         const distY = particle.y - otherParticle.y;
         const dist = Math.sqrt(distX * distX + distY * distY);
 
-        function universalForce() {
-
-            const distCenterX = particle.x - centerX;
-            const distCenterY = particle.y - centerY;
-            const distCenter = Math.sqrt(distCenterX * distCenterX + distCenterY * distCenterY);
-            const xDirection = distX / distCenter;
-            const yDirection = distY / distCenter;
-
-            const universalForceX = -xDirection * 0.0001;
-            const universalForceY = -yDirection * 0.0001;
-
-            const frictionConstant = 1;
-            particle.vx = (particle.vx + universalForceX) * frictionConstant;
-            particle.vy = (particle.vy + universalForceY) * frictionConstant;
-        }
-
-        universalForce();
-
         if (dist < universalPushForceRange) {
             universalPush(particle, otherParticle, 0.6);
         } else if (dist < colorForceRange) {
@@ -167,7 +156,6 @@ function applyForceAllToOne (particle) {
         const frictionConstant = 0.9;
         particle.vx = (particle.vx + forceX) * frictionConstant;
         particle.vy = (particle.vy + forceY) * frictionConstant;
-   
     }
 
     function push(color1, color2, sila, otherParticle) {
@@ -201,4 +189,3 @@ function applyForceAllToOne (particle) {
 
     }
 }
-
