@@ -16,7 +16,7 @@ document.body.appendChild(app.view);
 function createCircle (particle) { 
     const circle  = new PIXI.Graphics();
     circle.beginFill(particle.color);
-    circle.drawCircle(particle.x, particle.y, 5);
+    circle.drawCircle(particle.x, particle.y, particle.r);
     circle.endFill();
     app.stage.addChild(circle)
     return circle;
@@ -72,6 +72,7 @@ function gameLoop() {
 
 function renderPixiParticle (particle) {
     particle.pixiCircle.x = particle.x;
+    particle.pixiCircle.y = particle.y;
 }
 
 function measureFps() {
