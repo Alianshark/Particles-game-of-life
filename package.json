@@ -1,0 +1,28 @@
+{
+  "name": "particle-game-of-life",
+  "version": "1.1.0",
+  "description": "javascript implementation of particles game of life",
+  "main": "app.js",
+  "scripts": {
+    "start": "npx http-server ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alianshark/Particles-game-of-life.git"
+  },
+  "keywords": [
+    "Particles",
+    "GemeOfLife",
+    "JavaScript",
+    "Simmulation"
+  ],
+  "author": "JohnnySalvia@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Alianshark/Particles-game-of-life/issues"
+  },
+  "homepage": "https://github.com/Alianshark/Particles-game-of-life#readme",
+  "dependencies": {
+    "pixi.js": "^7.2.4"
+  }
+}
