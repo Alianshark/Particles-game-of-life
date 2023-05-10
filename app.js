@@ -3,7 +3,7 @@
 import * as PIXI from './node_modules/pixi.js/dist/pixi.mjs'
 const canvasWidth = 1000;
 const canvasHeight = 700;
-const maxParticles = 300;
+const maxParticles = 500;
 const colors = ['red', 'green', 'blue'];
 const forceConstant = 10;
 const centerX = canvasWidth/2; 
@@ -30,23 +30,11 @@ let framesPerSecond = 0;
 
 let particles = [];
 
-let context = createContext();
-
 generateParticles('red');
 generateParticles('green');
 //generateParticles('blue')
 requestAnimationFrame(gameLoop);
 setInterval(measureFps, 1000);
-
-function createContext() {
-    let canvas = document.querySelector('canvas');
-    let context = canvas.getContext('2d');
-    
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
-
-    return context;
-}
 
 function generateParticles(color) {
     let numP = 0;
@@ -75,8 +63,6 @@ function generateParticles(color) {
 function gameLoop() {
     framesPerSecond += 1;
     
-    clearScreen();
-    particles.forEach(renderParticle);
     particles.forEach(renderPixiParticle);
     particles.forEach(moveParticle);
     
@@ -91,21 +77,6 @@ function renderPixiParticle (particle) {
 function measureFps() {
     fpsDiv.innerHTML = 'fps: ' + framesPerSecond;
     framesPerSecond = 0;
-}
-
-function clearScreen () {
-    context.fillStyle = '#000';
-    context.fillRect(0,0,canvasWidth,canvasHeight); 
-}
-
-function renderParticle (particle) {
-    context.beginPath();
-    context.arc(particle.x, particle.y, particle.r, 0, 2 * Math.PI, false);
-    context.fillStyle = particle.color;
-    context.fill();
- 
-    //drawUniversalForce(particle);
-    drawColorForce(particle);
 }
 
 function drawUniversalForce(particle) {
