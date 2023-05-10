@@ -1,5 +1,5 @@
 'use strict';
-
+import * as PIXI from './node_modules/pixi.js/dist/pixi.mjs'
 const canvasWidth = 1000;
 const canvasHeight = 700;
 const maxParticles = 300;
@@ -10,6 +10,8 @@ const centerY = canvasHeight/2;
 const colorForceRange = 100;
 const universalPushForceRange = 30;
 const radius = canvasHeight / 4;
+let app = new PIXI.Application({ width: canvasWidth, height: canvasHeight });
+document.body.appendChild(app.view);
 
 const fpsDiv = document.querySelector('#fps');
 
@@ -18,8 +20,10 @@ let framesPerSecond = 0;
 let particles = [];
 
 let context = createContext();
+
 generateParticles('red');
-generateParticles('green');
+
+//generateParticles('green');
 //generateParticles('blue')
 requestAnimationFrame(gameLoop);
 setInterval(measureFps, 1000);
@@ -41,7 +45,7 @@ function generateParticles(color) {
             x: Math.random() * canvasWidth,
             y: Math.random() * canvasHeight,
             r: 4,
-            vx: 0,
+            vx: 1,
             vy: 0,
             color: color,
         };
@@ -59,8 +63,8 @@ function gameLoop() {
     clearScreen();
     particles.forEach(renderParticle);
     particles.forEach(moveParticle);
-    particles.forEach(applyForceAllToOne);
-    particles.forEach(reflection);
+   // particles.forEach(applyForceAllToOne);
+  //  particles.forEach(reflection);
 }
 
 function measureFps() {
