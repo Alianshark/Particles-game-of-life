@@ -50,8 +50,8 @@ function generateParticles(color) {
         
         const pixiCircle = createCircle(particle);
         particle.pixiCircle = pixiCircle;
-        
-        
+        const forceCircle = createUniversalForceCircle(particle)
+        particle.pixiCircle.forceCircle = forceCircle;
         particles.push(particle);
 
         numP += 1;
@@ -73,6 +73,8 @@ function gameLoop() {
 function renderPixiParticle (particle) {
     particle.pixiCircle.x = particle.x;
     particle.pixiCircle.y = particle.y;
+    particle.pixiCircle.forceCircle.x = particle.x;
+    particle.pixiCircle.forceCircle.y = particle.y;
 }
 
 function measureFps() {
@@ -80,12 +82,13 @@ function measureFps() {
     framesPerSecond = 0;
 }
 
-function drawUniversalForce(particle) {
-    context.beginPath();
-    context.setLineDash([]);
-    context.arc(particle.x, particle.y, universalPushForceRange/2, 0, 2 * Math.PI , false);
-    context.strokeStyle = particle.color;
-    context.stroke();
+function createUniversalForceCircle(particle) {
+    const forceCircle  = new PIXI.Graphics();
+    forceCircle.lineStyle(2, particle.color);
+    forceCircle.drawCircle(particle.x, particle.y, universalPushForceRange);
+    forceCircle.endFill();
+    app.stage.addChild(forceCircle)
+    return forceCircle
 }
 
 function drawColorForce(particle) {
