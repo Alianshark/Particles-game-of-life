@@ -47,13 +47,13 @@ function generateParticles(color) {
     app.stage.addChild(container)
     particle.container = container
 
-    const pixiCircle = createCircle(particle)
-    particle.pixiCircle = pixiCircle
-    container.addChild(pixiCircle)
+    const partikleCircle = createCircle(particle)
+    particle.pixiCircle = partikleCircle
+    container.addChild(partikleCircle)
 
     const forceCircle = createUniversalForceCircle(particle)
     particle.pixiCircle.forceCircle = forceCircle
-    container.addChild(forceCircle)
+    //container.addChild(forceCircle)
     /*
       const pixiCircleColorForce = drawColorForce(particle)
       particle.pixiCircle.pixiCircleColorForce = pixiCircleColorForce
@@ -141,11 +141,11 @@ function applyForceAllToOne(particle) {
 
     if (dist < universalPushForceRange) {
       universalPush(particle, otherParticle, 0.6)
-      lightCircleLines(particle)
+      //lightCircleLines(particle)
     } else {
       pull('red', 'red', 0.1, otherParticle)
       pull('red', 'green', 1, otherParticle)
-      noLightCircleLines(particle)
+      //noLightCircleLines(particle)
     }
   }
 
