@@ -7,6 +7,7 @@
   </head>
   <body>
     <div id="fps">fps: -</div>
+    <h2>Numbers of particles</h2>
     <div class="slidecontainer">
       <input
         type="range"
@@ -17,6 +18,19 @@
         id="myRange"
       />
       <p>Value: <span id="demo"></span></p>
+    </div>
+    <h2>Force</h2>
+    <div class="slidecontainer2">
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value="0.01"
+        class="slider"
+        id="forceRange"
+      />
+      <p>Value: <span id="demo2"></span></p>
     </div>
   </body>
   <script type="module" src="app.js"></script>

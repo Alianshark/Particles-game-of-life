@@ -233,3 +233,16 @@ function createParticle(color) {
       container.addChild(pixiCircleColorForce)
     */
 }
+
+function forceSlider() {
+  var slider = document.getElementById('forceRange')
+  slider.value = 0.1
+  var output = document.getElementById('demo2')
+  output.innerHTML = slider.value // Display the default slider value
+  // Update the current slider value (each time you drag the slider handle)
+  slider.oninput = function () {
+    console.log(slider)
+    output.innerHTML = this.value
+  }
+}
+forceSlider()
