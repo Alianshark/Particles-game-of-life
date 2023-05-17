@@ -3,8 +3,8 @@
 import * as PIXI from './lib/pixi.mjs'
 import { Container } from './lib/pixi.mjs'
 
-const canvasWidth = 1000
-const canvasHeight = 700
+const canvasWidth = 1280
+const canvasHeight = 720
 const maxParticles = 300
 const colors = ['red', 'green', 'blue']
 const forceConstant = 10
@@ -28,7 +28,7 @@ function createCircle(particle) {
 
 generateParticles('red')
 generateParticles('green')
-//generateParticles('blue')
+generateParticles('blue')
 requestAnimationFrame(gameLoop)
 setInterval(measureFps, 1000)
 
@@ -143,7 +143,7 @@ function applyForceAllToOne(particle) {
       universalPush(particle, otherParticle, 0.6)
       //lightCircleLines(particle)
     } else {
-      pull('red', 'red', 0.1, otherParticle)
+      pull('red', 'red', 0.2, otherParticle)
       pull('red', 'green', 1, otherParticle)
       //noLightCircleLines(particle)
     }
