@@ -5,7 +5,7 @@ import { Container } from './lib/pixi.mjs'
 
 const canvasWidth = 1280
 const canvasHeight = 720
-const maxParticles = 300
+const maxParticles = 500
 const colors = ['red', 'green', 'blue']
 const forceConstant = 10
 const colorForceRange = 100
@@ -14,26 +14,32 @@ const fpsDiv = document.querySelector('#fps')
 let framesPerSecond = 0
 let particles = []
 
+const circleTemplate = new PIXI.Graphics()
+circleTemplate.beginFill('white')
+circleTemplate.drawCircle(0, 0, 1)
+circleTemplate.endFill()
 let app = new PIXI.Application({ width: canvasWidth, height: canvasHeight })
 document.body.appendChild(app.view)
 app.ticker.add(gameLoop)
 
 function createCircle(particle) {
-  const circle = new PIXI.Graphics()
-  circle.beginFill(particle.color)
-  circle.drawCircle(particle.x, particle.y, particle.r)
-  circle.endFill()
+  let circle = new PIXI.Graphics(circleTemplate.geometry)
+  circle.x = particle.x
+  circle.y = particle.y
+  circle.scale.set(particle.r, particle.r)
+  circle.tint = particle.color
   return circle
 }
 
-generateParticles('red')
-generateParticles('green')
-generateParticles('blue')
+generateParticles(0xcb4335)
+generateParticles(0x6bff33)
+generateParticles(0x2fafe6)
 requestAnimationFrame(gameLoop)
 setInterval(measureFps, 1000)
 
 function generateParticles(color) {
   let numP = 0
+
   while (numP < maxParticles) {
     let particle = {
       x: Math.random() * canvasWidth,
