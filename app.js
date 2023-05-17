@@ -19,7 +19,7 @@ circleTemplate.beginFill('white')
 circleTemplate.drawCircle(0, 0, 1)
 circleTemplate.endFill()
 let app = new PIXI.Application({ width: canvasWidth, height: canvasHeight })
-document.body.appendChild(app.view)
+document.body.prepend(app.view)
 app.ticker.add(gameLoop)
 
 function createCircle(particle) {
