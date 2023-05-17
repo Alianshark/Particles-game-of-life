@@ -1,7 +1,7 @@
 'use strict'
 
-import * as PIXI from './node_modules/pixi.js/dist/pixi.mjs'
-import { Container } from './node_modules/pixi.js/dist/pixi.mjs'
+import * as PIXI from './lib/pixi.mjs'
+import { Container } from './lib/pixi.mjs'
 
 const canvasWidth = 1000
 const canvasHeight = 700
