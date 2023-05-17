@@ -31,41 +31,19 @@ function createCircle(particle) {
   return circle
 }
 
-generateParticles(0xcb4335)
-generateParticles(0x6bff33)
-generateParticles(0x2fafe6)
+generateParticles(0xcb4335, maxParticles)
+generateParticles(0x6bff33, maxParticles)
+generateParticles(0x2fafe6, maxParticles)
 requestAnimationFrame(gameLoop)
 setInterval(measureFps, 1000)
 
-function generateParticles(color) {
+function generateParticles(color, numParticles) {
   let numP = 0
 
-  while (numP < maxParticles) {
-    let particle = {
-      x: Math.random() * canvasWidth,
-      y: Math.random() * canvasHeight,
-      r: 4,
-      vx: 0,
-      vy: 0,
-      color: color,
-    }
-    const container = new Container()
-    app.stage.addChild(container)
-    particle.container = container
+  while (numP < numParticles) {
+    const newParticle = createParticle(color)
 
-    const partikleCircle = createCircle(particle)
-    particle.pixiCircle = partikleCircle
-    container.addChild(partikleCircle)
-
-    const forceCircle = createUniversalForceCircle(particle)
-    particle.pixiCircle.forceCircle = forceCircle
-    //container.addChild(forceCircle)
-    /*
-      const pixiCircleColorForce = drawColorForce(particle)
-      particle.pixiCircle.pixiCircleColorForce = pixiCircleColorForce
-      container.addChild(pixiCircleColorForce)
-    */
-    particles.push(particle)
+    particles.push(newParticle)
 
     numP += 1
   }
@@ -199,4 +177,59 @@ function applyForceAllToOne(particle) {
     particle.vx = (particle.vx + forceX) * frictionConstant
     particle.vy = (particle.vy + forceY) * frictionConstant
   }
+}
+
+function sliderOption() {
+  var slider = document.getElementById('myRange')
+  slider.value = maxParticles
+  var output = document.getElementById('demo')
+  output.innerHTML = slider.value // Display the default slider value
+  // Update the current slider value (each time you drag the slider handle)
+  slider.oninput = function () {
+    deleteAllParticles()
+    generateParticles(0xcb4335, this.value)
+    generateParticles(0x6bff33, this.value)
+    generateParticles(0x2fafe6, this.value)
+    output.innerHTML = this.value
+  }
+}
+
+function deleteAllParticles() {
+  particles.forEach(deleteParticle)
+  particles = []
+}
+
+function deleteParticle(particle) {
+  app.stage.removeChild(particle.container)
+  particle.container.destroy()
+}
+
+sliderOption()
+
+function createParticle(color) {
+  let particle = {
+    x: Math.random() * canvasWidth,
+    y: Math.random() * canvasHeight,
+    r: 4,
+    vx: 0,
+    vy: 0,
+    color: color,
+  }
+  const container = new Container()
+  app.stage.addChild(container)
+  particle.container = container
+
+  const partikleCircle = createCircle(particle)
+  particle.pixiCircle = partikleCircle
+  container.addChild(partikleCircle)
+
+  const forceCircle = createUniversalForceCircle(particle)
+  particle.pixiCircle.forceCircle = forceCircle
+  return particle
+  //container.addChild(forceCircle)
+  /*
+      const pixiCircleColorForce = drawColorForce(particle)
+      particle.pixiCircle.pixiCircleColorForce = pixiCircleColorForce
+      container.addChild(pixiCircleColorForce)
+    */
 }

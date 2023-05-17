@@ -1,14 +1,18 @@
-html, body {
-    margin: 0px;
-    padding: 0px;
+html,
+body {
+  margin: 0px;
+  padding: 0px;
 }
 canvas {
-    border: solid 1px black;
-  
+  border: solid 1px black;
 }
 
 #fps {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.slider {
+  width: 100%;
 }

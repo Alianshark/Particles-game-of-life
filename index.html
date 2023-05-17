@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8"/>
+  <head>
+    <meta charset="UTF-8" />
     <title>Page Title</title>
-    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
-</head>
-<body>
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+  </head>
+  <body>
     <div id="fps">fps: -</div>
-</body>
-<script type="module" src="app.js"> </script>
+    <div class="slidecontainer">
+      <input
+        type="range"
+        min="1"
+        max="1000"
+        value="1"
+        class="slider"
+        id="myRange"
+      />
+      <p>Value: <span id="demo"></span></p>
+    </div>
+  </body>
+  <script type="module" src="app.js"></script>
 </html>
