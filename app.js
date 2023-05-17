@@ -5,7 +5,7 @@ import { Container } from './lib/pixi.mjs'
 
 const canvasWidth = 1000
 const canvasHeight = 700
-const maxParticles = 100
+const maxParticles = 300
 const colors = ['red', 'green', 'blue']
 const forceConstant = 10
 const colorForceRange = 100
@@ -140,11 +140,11 @@ function applyForceAllToOne(particle) {
     const dist = Math.sqrt(distX * distX + distY * distY)
 
     if (dist < universalPushForceRange) {
-      //universalPush(particle, otherParticle, 0.6)
+      universalPush(particle, otherParticle, 0.6)
       lightCircleLines(particle)
     } else {
-      //pull('red', 'red', 0.1, otherParticle);
-      //pull('red', 'green', 1, otherParticle);
+      pull('red', 'red', 0.1, otherParticle)
+      pull('red', 'green', 1, otherParticle)
       noLightCircleLines(particle)
     }
   }
