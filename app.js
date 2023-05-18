@@ -6,7 +6,9 @@ import { Container } from './lib/pixi.mjs'
 const canvasWidth = 1280
 const canvasHeight = 720
 const maxParticles = 500
-const colors = ['red', 'green', 'blue']
+const red = 0xcb4335
+const green = 0x6bff33
+const blue = 0x2fafe6
 const forceConstant = 10
 const colorForceRange = 100
 const universalPushForceRange = 30
@@ -31,9 +33,9 @@ function createCircle(particle) {
   return circle
 }
 
-generateParticles(0xcb4335, maxParticles)
-generateParticles(0x6bff33, maxParticles)
-generateParticles(0x2fafe6, maxParticles)
+generateParticles(red, maxParticles)
+generateParticles(green, maxParticles)
+generateParticles(blue, maxParticles)
 requestAnimationFrame(gameLoop)
 setInterval(measureFps, 1000)
 
@@ -112,6 +114,7 @@ function reflection(particle) {
     particle.y = 0
   }
 }
+let redredPullForce = 0.2
 
 function applyForceAllToOne(particle) {
   particles.forEach(applyForce)
@@ -124,11 +127,11 @@ function applyForceAllToOne(particle) {
     const dist = Math.sqrt(distX * distX + distY * distY)
 
     if (dist < universalPushForceRange) {
-      universalPush(particle, otherParticle, 0.6)
+      //universalPush(particle, otherParticle, 0.6)
       //lightCircleLines(particle)
     } else {
-      pull('red', 'red', 0.2, otherParticle)
-      pull('red', 'green', 1, otherParticle)
+      pull(red, red, redredPullForce, otherParticle)
+      pull(red, green, 1, otherParticle)
       //noLightCircleLines(particle)
     }
   }
@@ -153,7 +156,6 @@ function applyForceAllToOne(particle) {
       applyColorForce(particle, otherParticle, +sila)
     }
   }
-
   function pull(color1, color2, sila, otherParticle) {
     if (otherParticle.color === color1 && particle.color === color2) {
       applyColorForce(particle, otherParticle, -sila)
@@ -187,9 +189,9 @@ function sliderOption() {
   // Update the current slider value (each time you drag the slider handle)
   slider.oninput = function () {
     deleteAllParticles()
-    generateParticles(0xcb4335, this.value)
-    generateParticles(0x6bff33, this.value)
-    generateParticles(0x2fafe6, this.value)
+    generateParticles(red, this.value)
+    generateParticles(green, this.value)
+    generateParticles(blue, this.value)
     output.innerHTML = this.value
   }
 }
@@ -225,8 +227,8 @@ function createParticle(color) {
 
   const forceCircle = createUniversalForceCircle(particle)
   particle.pixiCircle.forceCircle = forceCircle
-  return particle
   //container.addChild(forceCircle)
+  return particle
   /*
       const pixiCircleColorForce = drawColorForce(particle)
       particle.pixiCircle.pixiCircleColorForce = pixiCircleColorForce
@@ -236,13 +238,14 @@ function createParticle(color) {
 
 function forceSlider() {
   var slider = document.getElementById('forceRange')
-  slider.value = 0.1
+  slider.value = redredPullForce
   var output = document.getElementById('demo2')
   output.innerHTML = slider.value // Display the default slider value
   // Update the current slider value (each time you drag the slider handle)
   slider.oninput = function () {
     console.log(slider)
     output.innerHTML = this.value
+    redredPullForce = this.value
   }
 }
 forceSlider()
