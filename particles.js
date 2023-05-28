@@ -1,4 +1,4 @@
-import { Graphics, Container} from "./lib/pixi.mjs"
+import { Graphics, Container } from "./lib/pixi.mjs"
 import { canvasHeight, canvasWidth, app } from "./manager.js"
 import { createUniversalForceCircle} from "./forces.js"
 export let particles = []
@@ -6,8 +6,9 @@ export const maxParticles = 50
 
 
 const circleTemplate = new Graphics()
+circleTemplate.lineStyle(1, 0x0000ff);
 circleTemplate.beginFill('white')
-circleTemplate.drawCircle(0, 0, 1)
+circleTemplate.drawCircle(0, 0, 2)
 circleTemplate.endFill()
 
 
@@ -17,6 +18,7 @@ function createCircle(particle) {
     circle.y = particle.y
     circle.scale.set(particle.r, particle.r)
     circle.tint = particle.color
+
     return circle
   }
 

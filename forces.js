@@ -27,7 +27,6 @@ export function applyForceAllToOne(particle) {
       const dist = Math.sqrt(distX * distX + distY * distY)
   
       if (dist < universalPushForceRange) {
-        console.log('test')
         universalPush(particle, otherParticle, 0.6)
         //lightCircleLines(particle)
       } else {
