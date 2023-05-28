@@ -32,6 +32,10 @@ export function applyForceAllToOne(particle) {
       } else {
         pull(red, red, redredPullForce, otherParticle)
         pull(red, green, 1, otherParticle)
+        push(blue, blue, 0.5, otherParticle)
+        push(blue, red, 0.5, otherParticle)
+        push(blue, green, 0.5, otherParticle)
+        pull(red, blue, 2.1, otherParticle)
         //noLightCircleLines(particle)
       }
     }

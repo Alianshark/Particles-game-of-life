@@ -11,7 +11,6 @@ let framesPerSecond = 0
 app.ticker.add(gameLoop)
 
 generateParticles(red, maxParticles)
-console.log('generate PArticles:', particles)
 generateParticles(green, maxParticles)
 generateParticles(blue, maxParticles)
 requestAnimationFrame(gameLoop)
@@ -60,24 +59,25 @@ function moveParticle(particle) {
 }
 
 function handleScreenEdgeCollision(particle) {
+  const r = Math.ceil(particle.pixiCircle.width);
   // right edge
-  if (particle.x > canvasWidth + particle.r) {
-    particle.x = 0 - particle.r
+  if (particle.x > canvasWidth + r) {
+    particle.x = 0 - r
   }
 
   // bottom edge
-  if (particle.y > canvasHeight + particle.r) {
-    particle.y = 0 - particle.r
+  if (particle.y > canvasHeight + r) {
+    particle.y = 0 - r
   }
   
   // left edge
-  if (particle.x < 0 - particle.r) {
-    particle.x = canvasWidth + particle.r
+  if (particle.x < 0 - r) {
+    particle.x = canvasWidth + r
   }
 
   // top edge
-  if (particle.y < 0 - particle.r) {
-    particle.y = canvasHeight + particle.r
+  if (particle.y < 0 - r) {
+    particle.y = canvasHeight + r
   }
 }
 
@@ -115,7 +115,6 @@ function forceSlider() {
   output.innerHTML = slider.value // Display the default slider value
   // Update the current slider value (each time you drag the slider handle)
   slider.oninput = function () {
-    console.log(slider)
     output.innerHTML = this.value
     redredPullForce = this.value
   }
