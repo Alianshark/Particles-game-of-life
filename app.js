@@ -3,20 +3,13 @@
 import * as PIXI from './lib/pixi.mjs'
 import { canvasWidth, canvasHeight, app } from './manager.js'
 import { particles, generateParticles, maxParticles, } from './particles.js'
-import { universalPushForceRange } from './forces.js'
+import { applyForceAllToOne, red, green, blue, redredPullForce} from './forces.js'
 
-const red = 0xcb4335
-const green = 0x6bff33
-const blue = 0x2fafe6
-const forceConstant = 10
-const colorForceRange = 100
 
 const fpsDiv = document.querySelector('#fps')
 let framesPerSecond = 0
 
 app.ticker.add(gameLoop)
-
-
 
 generateParticles(red, maxParticles)
 generateParticles(green, maxParticles)
@@ -78,72 +71,6 @@ function reflection(particle) {
   }
   if (particle.y > canvasHeight) {
     particle.y = 0
-  }
-}
-let redredPullForce = 0.2
-
-function applyForceAllToOne(particle) {
-  particles.forEach(applyForce)
-
-  function applyForce(otherParticle) {
-    if (otherParticle === particle) return
-
-    const distX = particle.x - otherParticle.x
-    const distY = particle.y - otherParticle.y
-    const dist = Math.sqrt(distX * distX + distY * distY)
-
-    if (dist < universalPushForceRange) {
-      //universalPush(particle, otherParticle, 0.6)
-      //lightCircleLines(particle)
-    } else {
-      pull(red, red, redredPullForce, otherParticle)
-      pull(red, green, 1, otherParticle)
-      //noLightCircleLines(particle)
-    }
-  }
-
-  function universalPush(particle, otherParticle, sila) {
-    const distX = particle.x - otherParticle.x
-    const distY = particle.y - otherParticle.y
-    const dist = Math.sqrt(distX * distX + distY * distY)
-
-    const xDirection = distX / dist
-    const yDirection = distY / dist
-    const force = ((forceConstant / dist) * sila) / 2
-    const forceX = xDirection * force
-    const forceY = yDirection * force
-    const frictionConstant = 0.9
-    particle.vx = (particle.vx + forceX) * frictionConstant
-    particle.vy = (particle.vy + forceY) * frictionConstant
-  }
-
-  function push(color1, color2, sila, otherParticle) {
-    if (otherParticle.color === color1 && particle.color === color2) {
-      applyColorForce(particle, otherParticle, +sila)
-    }
-  }
-  function pull(color1, color2, sila, otherParticle) {
-    if (otherParticle.color === color1 && particle.color === color2) {
-      applyColorForce(particle, otherParticle, -sila)
-    }
-  }
-
-  function applyColorForce(particle, otherParticle, sila) {
-    const distX = particle.x - otherParticle.x
-    const distY = particle.y - otherParticle.y
-    const dist = Math.sqrt(distX * distX + distY * distY)
-
-    if (dist > colorForceRange) return
-
-    const xDirection = distX / dist
-    const yDirection = distY / dist
-    const force = (forceConstant / dist) * sila
-    const forceX = xDirection * force
-    const forceY = yDirection * force
-
-    const frictionConstant = 0.9
-    particle.vx = (particle.vx + forceX) * frictionConstant
-    particle.vy = (particle.vy + forceY) * frictionConstant
   }
 }
 
