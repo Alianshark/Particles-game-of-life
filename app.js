@@ -5,15 +5,15 @@ import { canvasWidth, canvasHeight, app } from './manager.js'
 import { particles, generateParticles, maxParticles, } from './particles.js'
 import { applyForceAllToOne, red, green, blue, redredPullForce} from './forces.js'
 
-
 const fpsDiv = document.querySelector('#fps')
 let framesPerSecond = 0
 
 app.ticker.add(gameLoop)
 
 generateParticles(red, maxParticles)
-generateParticles(green, maxParticles)
-generateParticles(blue, maxParticles)
+console.log('generate PArticles:', particles)
+//generateParticles(green, maxParticles)
+//generateParticles(blue, maxParticles)
 requestAnimationFrame(gameLoop)
 setInterval(measureFps, 1000)
 
@@ -31,13 +31,14 @@ function gameLoop() {
   particles.forEach(renderPixiParticle)
   particles.forEach(moveParticle)
 
-  particles.forEach(applyForceAllToOne)
-  particles.forEach(reflection)
+  //particles.forEach(applyForceAllToOne)
+ // particles.forEach(reflection)
+ particles.forEach(handleScreenEdgeCollision)
 }
 
 function renderPixiParticle(particle) {
-  particle.container.x = particle.x
-  particle.container.y = particle.y
+  particle.pixiCircle.x = particle.x
+  particle.pixiCircle.y = particle.y
 }
 
 function measureFps() {
@@ -59,7 +60,27 @@ function moveParticle(particle) {
   particle.y += particle.vy
 }
 
+function handleScreenEdgeCollision(particle) {
+  if ((particle.x ) > canvasWidth) {
+    particle.x = 0
+    console.log('PArticle', particle)
+  }
+  
+  /*
+  if ((particle.x + particle.r) > canvasWidth) {
+    particle.x = 0
+  }
+  if ((particle.y + particle.r) < 0) {
+    particle.y = canvasHeight + particle.y
+  }
+  if ((particle.y + particle.r) > canvasHeight) {
+    particle.y = 0
+  }
+  */
+}
+
 function reflection(particle) {
+  /*
   if (particle.x < 0) {
     particle.x = canvasWidth + particle.x
   }
@@ -72,6 +93,7 @@ function reflection(particle) {
   if (particle.y > canvasHeight) {
     particle.y = 0
   }
+  */
 }
 
 function sliderOption() {
@@ -95,12 +117,11 @@ function deleteAllParticles() {
 }
 
 function deleteParticle(particle) {
-  app.stage.removeChild(particle.container)
-  particle.container.destroy()
+  app.stage.removeChild(particle.pixiCircle)
+  particle.pixiCircle.destroy()
 }
 
-sliderOption()
-
+//sliderOption()
 
 function forceSlider() {
   var slider = document.getElementById('forceRange')
@@ -114,4 +135,4 @@ function forceSlider() {
     redredPullForce = this.value
   }
 }
-forceSlider()
+//forceSlider()
