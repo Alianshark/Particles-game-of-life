@@ -1,53 +1,28 @@
 'use strict'
 
 import * as PIXI from './lib/pixi.mjs'
-import { Container } from './lib/pixi.mjs'
-import { canvasHeight, canvasHeight, app } from './manager.js'
+import { canvasWidth, canvasHeight, app } from './manager.js'
+import { particles, generateParticles, maxParticles, } from './particles.js'
+import { universalPushForceRange } from './forces.js'
 
-const maxParticles = 500
 const red = 0xcb4335
 const green = 0x6bff33
 const blue = 0x2fafe6
 const forceConstant = 10
 const colorForceRange = 100
-const universalPushForceRange = 30
+
 const fpsDiv = document.querySelector('#fps')
 let framesPerSecond = 0
-let particles = []
-
-const circleTemplate = new PIXI.Graphics()
-circleTemplate.beginFill('white')
-circleTemplate.drawCircle(0, 0, 1)
-circleTemplate.endFill()
 
 app.ticker.add(gameLoop)
 
-function createCircle(particle) {
-  let circle = new PIXI.Graphics(circleTemplate.geometry)
-  circle.x = particle.x
-  circle.y = particle.y
-  circle.scale.set(particle.r, particle.r)
-  circle.tint = particle.color
-  return circle
-}
+
 
 generateParticles(red, maxParticles)
 generateParticles(green, maxParticles)
 generateParticles(blue, maxParticles)
 requestAnimationFrame(gameLoop)
 setInterval(measureFps, 1000)
-
-function generateParticles(color, numParticles) {
-  let numP = 0
-
-  while (numP < numParticles) {
-    const newParticle = createParticle(color)
-
-    particles.push(newParticle)
-
-    numP += 1
-  }
-}
 
 function noLightCircleLines(particle) {
   particle.pixiCircle.forceCircle.tint = 'white'
@@ -77,13 +52,6 @@ function measureFps() {
   framesPerSecond = 0
 }
 
-function createUniversalForceCircle(particle) {
-  const forceCircle = new PIXI.Graphics()
-  forceCircle.lineStyle(2, 'white')
-  forceCircle.drawCircle(particle.x, particle.y, universalPushForceRange / 2)
-  forceCircle.endFill()
-  return forceCircle
-}
 
 function drawColorForce(particle) {
   const forceCircle = new PIXI.Graphics()
@@ -206,33 +174,6 @@ function deleteParticle(particle) {
 
 sliderOption()
 
-function createParticle(color) {
-  let particle = {
-    x: Math.random() * canvasWidth,
-    y: Math.random() * canvasHeight,
-    r: 4,
-    vx: 0,
-    vy: 0,
-    color: color,
-  }
-  const container = new Container()
-  app.stage.addChild(container)
-  particle.container = container
-
-  const partikleCircle = createCircle(particle)
-  particle.pixiCircle = partikleCircle
-  container.addChild(partikleCircle)
-
-  const forceCircle = createUniversalForceCircle(particle)
-  particle.pixiCircle.forceCircle = forceCircle
-  //container.addChild(forceCircle)
-  return particle
-  /*
-      const pixiCircleColorForce = drawColorForce(particle)
-      particle.pixiCircle.pixiCircleColorForce = pixiCircleColorForce
-      container.addChild(pixiCircleColorForce)
-    */
-}
 
 function forceSlider() {
   var slider = document.getElementById('forceRange')
