@@ -12,8 +12,8 @@ app.ticker.add(gameLoop)
 
 generateParticles(red, maxParticles)
 console.log('generate PArticles:', particles)
-//generateParticles(green, maxParticles)
-//generateParticles(blue, maxParticles)
+generateParticles(green, maxParticles)
+generateParticles(blue, maxParticles)
 requestAnimationFrame(gameLoop)
 setInterval(measureFps, 1000)
 
@@ -31,8 +31,7 @@ function gameLoop() {
   particles.forEach(renderPixiParticle)
   particles.forEach(moveParticle)
 
-  //particles.forEach(applyForceAllToOne)
- // particles.forEach(reflection)
+  particles.forEach(applyForceAllToOne)
  particles.forEach(handleScreenEdgeCollision)
 }
 
@@ -61,39 +60,25 @@ function moveParticle(particle) {
 }
 
 function handleScreenEdgeCollision(particle) {
-  if ((particle.x ) > canvasWidth) {
-    particle.x = 0
-    console.log('PArticle', particle)
+  // right edge
+  if (particle.x > canvasWidth + particle.r) {
+    particle.x = 0 - particle.r
+  }
+
+  // bottom edge
+  if (particle.y > canvasHeight + particle.r) {
+    particle.y = 0 - particle.r
   }
   
-  /*
-  if ((particle.x + particle.r) > canvasWidth) {
-    particle.x = 0
+  // left edge
+  if (particle.x < 0 - particle.r) {
+    particle.x = canvasWidth + particle.r
   }
-  if ((particle.y + particle.r) < 0) {
-    particle.y = canvasHeight + particle.y
-  }
-  if ((particle.y + particle.r) > canvasHeight) {
-    particle.y = 0
-  }
-  */
-}
 
-function reflection(particle) {
-  /*
-  if (particle.x < 0) {
-    particle.x = canvasWidth + particle.x
+  // top edge
+  if (particle.y < 0 - particle.r) {
+    particle.y = canvasHeight + particle.r
   }
-  if (particle.x > canvasWidth) {
-    particle.x = 0
-  }
-  if (particle.y < 0) {
-    particle.y = canvasHeight + particle.y
-  }
-  if (particle.y > canvasHeight) {
-    particle.y = 0
-  }
-  */
 }
 
 function sliderOption() {

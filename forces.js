@@ -28,11 +28,11 @@ export function applyForceAllToOne(particle) {
   
       if (dist < universalPushForceRange) {
         console.log('test')
-        //universalPush(particle, otherParticle, 0.6)
+        universalPush(particle, otherParticle, 0.6)
         //lightCircleLines(particle)
       } else {
-       // pull(red, red, redredPullForce, otherParticle)
-       // pull(red, green, 1, otherParticle)
+        pull(red, red, redredPullForce, otherParticle)
+        pull(red, green, 1, otherParticle)
         //noLightCircleLines(particle)
       }
     }

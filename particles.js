@@ -2,7 +2,7 @@ import { Graphics, Container} from "./lib/pixi.mjs"
 import { canvasHeight, canvasWidth, app } from "./manager.js"
 import { createUniversalForceCircle} from "./forces.js"
 export let particles = []
-export const maxParticles = 5
+export const maxParticles = 50
 
 
 const circleTemplate = new Graphics()
@@ -25,8 +25,8 @@ export function createParticle(color) {
     let particle = {
         x: Math.random() * canvasWidth,
         y: Math.random() * canvasHeight,
-        r: 4,
-        vx: 1,
+        r: 10,
+        vx: 0,
         vy: 0,
         color: color,
     }
