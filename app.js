@@ -2,9 +2,8 @@
 
 import * as PIXI from './lib/pixi.mjs'
 import { Container } from './lib/pixi.mjs'
+import { canvasHeight, canvasHeight, app } from './manager.js'
 
-const canvasWidth = 1280
-const canvasHeight = 720
 const maxParticles = 500
 const red = 0xcb4335
 const green = 0x6bff33
@@ -20,8 +19,7 @@ const circleTemplate = new PIXI.Graphics()
 circleTemplate.beginFill('white')
 circleTemplate.drawCircle(0, 0, 1)
 circleTemplate.endFill()
-let app = new PIXI.Application({ width: canvasWidth, height: canvasHeight })
-document.body.prepend(app.view)
+
 app.ticker.add(gameLoop)
 
 function createCircle(particle) {
