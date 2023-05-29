@@ -16,6 +16,17 @@ export function createUniversalForceCircle(particle) {
     return forceCircle
 }
 
+
+function getDistToScreenEdges(particle) {
+  const screenEdgesDist = {
+    top: particle.y - 0,
+    bottom: screenHeight - particle.y,
+    left: particle.x - 0,
+    right: screenWidth - particle.x,
+  };
+  return screenEdgesDist
+}
+
 export function applyForceAllToOne(particle) {
     particles.forEach(applyForce)
   
