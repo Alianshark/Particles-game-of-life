@@ -1,6 +1,6 @@
 import { Graphics } from "./lib/pixi.mjs"
 import { particles } from "./particles.js"
-export const universalPushForceRange = 30
+export const universalPushForceRange = 50
 export const forceConstant = 10
 const colorForceRange = 100
 export const red = 0xcb4335
@@ -27,11 +27,15 @@ export function applyForceAllToOne(particle) {
       const dist = Math.sqrt(distX * distX + distY * distY)
   
       if (dist < universalPushForceRange) {
-        universalPush(particle, otherParticle, 0.6)
+        universalPush(particle, otherParticle, 1.6)
         //lightCircleLines(particle)
       } else {
-        pull(red, red, redredPullForce, otherParticle)
-        pull(red, green, 1, otherParticle)
+        //pull(red, red, redredPullForce, otherParticle)
+        //pull(red, green, 1, otherParticle)
+        //push(blue, blue, 0.5, otherParticle)
+        //push(blue, red, 0.5, otherParticle)
+        //push(blue, green, 0.5, otherParticle)
+        //pull(red, blue, 2.1, otherParticle)
         //noLightCircleLines(particle)
       }
     }
@@ -46,7 +50,7 @@ export function applyForceAllToOne(particle) {
       const force = ((forceConstant / dist) * sila) / 2
       const forceX = xDirection * force
       const forceY = yDirection * force
-      const frictionConstant = 0.9
+      const frictionConstant = 0.99
       particle.vx = (particle.vx + forceX) * frictionConstant
       particle.vy = (particle.vy + forceY) * frictionConstant
     }

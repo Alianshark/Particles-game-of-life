@@ -36,3 +36,8 @@ npx http-server .
 ```
 
 ![Demo](/Particles-game-of-life/readme-img/game-demo-2.gif)
+
+## Physics
+### Force action through screen
+![Force action through screen diagram](readme-img/force-action-through-screen.png)
+Geogebra link: [https://www.geogebra.org/geometry/jkpy35f6](https://www.geogebra.org/geometry/jkpy35f6)

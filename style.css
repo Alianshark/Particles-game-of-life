@@ -5,6 +5,14 @@ body {
 }
 canvas {
   border: solid 1px black;
+  margin: auto;
+}
+
+#pixi-app-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 100px;
 }
 
 #fps {
