@@ -37,24 +37,23 @@ export function applyForceAllToOne(particle) {
       const distY = particle.y - otherParticle.y
       const dist = Math.sqrt(distX * distX + distY * distY)
   
-      if (dist < universalPushForceRange) {
-        universalPush(particle, otherParticle, 1.6)
-        //lightCircleLines(particle)
-      } else {
-        //pull(red, red, redredPullForce, otherParticle)
-        //pull(red, green, 1, otherParticle)
-        //push(blue, blue, 0.5, otherParticle)
-        //push(blue, red, 0.5, otherParticle)
-        //push(blue, green, 0.5, otherParticle)
-        //pull(red, blue, 2.1, otherParticle)
-        //noLightCircleLines(particle)
-      }
+      universalPush(particle, otherParticle, 1.6)
+      //lightCircleLines(particle)
+      //pull(red, red, redredPullForce, otherParticle)
+      //pull(red, green, 1, otherParticle)
+      //push(blue, blue, 0.5, otherParticle)
+      //push(blue, red, 0.5, otherParticle)
+      //push(blue, green, 0.5, otherParticle)
+      //pull(red, blue, 2.1, otherParticle)
+      //noLightCircleLines(particle)
     }
   
     function universalPush(particle, otherParticle, sila) {
       const distX = particle.x - otherParticle.x
       const distY = particle.y - otherParticle.y
       const dist = Math.sqrt(distX * distX + distY * distY)
+
+      if (dist > universalPushForceRange) return
   
       const xDirection = distX / dist
       const yDirection = distY / dist
