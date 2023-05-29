@@ -1,5 +1,6 @@
 import { Graphics } from "./lib/pixi.mjs"
 import { particles } from "./particles.js"
+import { canvasWidth, canvasHeight } from "./manager.js"
 export const universalPushForceRange = 50
 export const forceConstant = 10
 const colorForceRange = 100
@@ -20,29 +21,41 @@ export function createUniversalForceCircle(particle) {
 function getDistToScreenEdges(particle) {
   const screenEdgesDist = {
     top: particle.y - 0,
-    bottom: screenHeight - particle.y,
+    bottom: canvasHeight - particle.y,
     left: particle.x - 0,
-    right: screenWidth - particle.x,
+    right: canvasWidth - particle.x,
   };
   return screenEdgesDist
 }
 
 function applyForce(particle, otherParticle, sila, range) {
-  const distX = particle.x - otherParticle.x
-  const distY = particle.y - otherParticle.y
-  const dist = Math.sqrt(distX * distX + distY * distY)
+  applyForceNaEkrane();
+  applyForceCherezEkran();
 
-  if (dist > range) return
+  function applyForceNaEkrane() {
+    const distX = particle.x - otherParticle.x
+    const distY = particle.y - otherParticle.y
+    const dist = Math.sqrt(distX * distX + distY * distY)
 
-  const xDirection = distX / dist
-  const yDirection = distY / dist
-  const force = (forceConstant / dist) * sila
-  const forceX = xDirection * force
-  const forceY = yDirection * force
+    if (dist > range) return
 
-  const frictionConstant = 0.99
-  particle.vx = (particle.vx + forceX) * frictionConstant
-  particle.vy = (particle.vy + forceY) * frictionConstant
+    const xDirection = distX / dist
+    const yDirection = distY / dist
+    const force = (forceConstant / dist) * sila
+    const forceX = xDirection * force
+    const forceY = yDirection * force
+
+    const frictionConstant = 0.99
+    particle.vx = (particle.vx + forceX) * frictionConstant
+    particle.vy = (particle.vy + forceY) * frictionConstant
+  }
+
+  function applyForceCherezEkran() {
+    const particleDist = getDistToScreenEdges(particle);
+    const otherParticleDist = getDistToScreenEdges(particle);
+
+    //TODO: formulas :) apply force
+  }
 }
 
 export function applyForceAllToOne(particle) {
