@@ -27,20 +27,34 @@ function getDistToScreenEdges(particle) {
   return screenEdgesDist
 }
 
+function applyForce(particle, otherParticle, sila, range) {
+  const distX = particle.x - otherParticle.x
+  const distY = particle.y - otherParticle.y
+  const dist = Math.sqrt(distX * distX + distY * distY)
+
+  if (dist > range) return
+
+  const xDirection = distX / dist
+  const yDirection = distY / dist
+  const force = (forceConstant / dist) * sila
+  const forceX = xDirection * force
+  const forceY = yDirection * force
+
+  const frictionConstant = 0.99
+  particle.vx = (particle.vx + forceX) * frictionConstant
+  particle.vy = (particle.vy + forceY) * frictionConstant
+}
+
 export function applyForceAllToOne(particle) {
-    particles.forEach(applyForce)
+    particles.forEach(applyAllForceTypes)
   
-    function applyForce(otherParticle) {
+    function applyAllForceTypes(otherParticle) {
       if (otherParticle === particle) return
-  
-      const distX = particle.x - otherParticle.x
-      const distY = particle.y - otherParticle.y
-      const dist = Math.sqrt(distX * distX + distY * distY)
   
       universalPush(particle, otherParticle, 1.6)
       //lightCircleLines(particle)
       //pull(red, red, redredPullForce, otherParticle)
-      //pull(red, green, 1, otherParticle)
+      pull(red, green, 1, otherParticle)
       //push(blue, blue, 0.5, otherParticle)
       //push(blue, red, 0.5, otherParticle)
       //push(blue, green, 0.5, otherParticle)
@@ -49,20 +63,7 @@ export function applyForceAllToOne(particle) {
     }
   
     function universalPush(particle, otherParticle, sila) {
-      const distX = particle.x - otherParticle.x
-      const distY = particle.y - otherParticle.y
-      const dist = Math.sqrt(distX * distX + distY * distY)
-
-      if (dist > universalPushForceRange) return
-  
-      const xDirection = distX / dist
-      const yDirection = distY / dist
-      const force = ((forceConstant / dist) * sila) / 2
-      const forceX = xDirection * force
-      const forceY = yDirection * force
-      const frictionConstant = 0.99
-      particle.vx = (particle.vx + forceX) * frictionConstant
-      particle.vy = (particle.vy + forceY) * frictionConstant
+      applyForce(particle, otherParticle, sila / 2, universalPushForceRange);
     }
   
     function push(color1, color2, sila, otherParticle) {
@@ -77,21 +78,7 @@ export function applyForceAllToOne(particle) {
     }
   
     function applyColorForce(particle, otherParticle, sila) {
-      const distX = particle.x - otherParticle.x
-      const distY = particle.y - otherParticle.y
-      const dist = Math.sqrt(distX * distX + distY * distY)
-  
-      if (dist > colorForceRange) return
-  
-      const xDirection = distX / dist
-      const yDirection = distY / dist
-      const force = (forceConstant / dist) * sila
-      const forceX = xDirection * force
-      const forceY = yDirection * force
-  
-      const frictionConstant = 0.9
-      particle.vx = (particle.vx + forceX) * frictionConstant
-      particle.vy = (particle.vy + forceY) * frictionConstant
+      applyForce(particle, otherParticle, sila, colorForceRange);
     }
   }
   
