@@ -2,13 +2,19 @@
 
 import * as PIXI from './lib/pixi.mjs'
 import { canvasWidth, canvasHeight, app } from './manager.js'
-import { particles, generateParticles, maxParticles, } from './particles.js'
-import { applyForceAllToOne, red, green, blue, redredPullForce} from './forces.js'
+import { particles, generateParticles, maxParticles } from './particles.js'
+import {
+  applyForceAllToOne,
+  red,
+  green,
+  blue,
+  redredPullForce,
+} from './forces.js'
 
 const fpsDiv = document.querySelector('#fps')
 let framesPerSecond = 0
 
-app.ticker.add(gameLoop)
+//app.ticker.add(gameLoop)
 app.ticker.minFPS = 0
 app.ticker.maxFPS = 1
 
@@ -33,19 +39,20 @@ function gameLoop() {
   particles.forEach(moveParticle)
 
   particles.forEach(applyForceAllToOne)
- particles.forEach(handleScreenEdgeCollision)
+  particles.forEach(handleScreenEdgeCollision)
 }
 
 function renderPixiParticle(particle) {
   particle.pixiCircle.x = particle.x
   particle.pixiCircle.y = particle.y
+  particle.pixiLine.x = particle.x
+  particle.pixiLine.y = particle.y
 }
 
 function measureFps() {
   fpsDiv.innerHTML = 'fps: ' + framesPerSecond
   framesPerSecond = 0
 }
-
 
 function drawColorForce(particle) {
   const forceCircle = new PIXI.Graphics()
@@ -61,7 +68,7 @@ function moveParticle(particle) {
 }
 
 function handleScreenEdgeCollision(particle) {
-  const r = Math.ceil(particle.pixiCircle.width);
+  const r = Math.ceil(particle.pixiCircle.width)
   // right edge
   if (particle.x > canvasWidth + r) {
     particle.x = 0 - r
@@ -71,7 +78,7 @@ function handleScreenEdgeCollision(particle) {
   if (particle.y > canvasHeight + r) {
     particle.y = 0 - r
   }
-  
+
   // left edge
   if (particle.x < 0 - r) {
     particle.x = canvasWidth + r
@@ -105,7 +112,9 @@ function deleteAllParticles() {
 
 function deleteParticle(particle) {
   app.stage.removeChild(particle.pixiCircle)
+  app.stage.removeChild(particle.pixiLine)
   particle.pixiCircle.destroy()
+  particle.pixiLine.destroy()
 }
 
 //sliderOption()
