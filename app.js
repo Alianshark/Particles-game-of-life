@@ -9,10 +9,12 @@ const fpsDiv = document.querySelector('#fps')
 let framesPerSecond = 0
 
 app.ticker.add(gameLoop)
+app.ticker.minFPS = 0
+app.ticker.maxFPS = 1
 
 generateParticles(red, maxParticles)
-generateParticles(green, maxParticles)
-generateParticles(blue, maxParticles)
+//generateParticles(green, maxParticles)
+//generateParticles(blue, maxParticles)
 requestAnimationFrame(gameLoop)
 setInterval(measureFps, 1000)
 

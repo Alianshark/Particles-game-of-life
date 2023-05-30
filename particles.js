@@ -2,7 +2,7 @@ import { Graphics, Container } from "./lib/pixi.mjs"
 import { canvasHeight, canvasWidth, app } from "./manager.js"
 import { createUniversalForceCircle} from "./forces.js"
 export let particles = []
-export const maxParticles = 200
+export const maxParticles = 2
 
 
 const circleTemplate = new Graphics()

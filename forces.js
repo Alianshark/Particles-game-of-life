@@ -53,7 +53,22 @@ function applyForce(particle, otherParticle, sila, range) {
   function applyForceCherezEkran() {
     const particleDist = getDistToScreenEdges(particle);
     const otherParticleDist = getDistToScreenEdges(particle);
+    //console.log('particleDist:',particleDist)
+    if ( particle.x > otherParticle.x ) {
+      const distX = particle.dist - otherParticleDist.right
+      if (dist > range) return
 
+      const xDirection = distX / dist
+      const yDirection = distY / dist
+      const force = (forceConstant / dist) * sila
+      const forceX = xDirection * force
+      const forceY = yDirection * force
+  
+      const frictionConstant = 0.99
+      particle.vx = (particle.vx + forceX) * frictionConstant
+      particle.vy = (particle.vy + forceY) * frictionConstant
+    }
+    console.log('otherParticleDist:',otherParticleDist)
     //TODO: formulas :) apply force
   }
 }
@@ -67,7 +82,7 @@ export function applyForceAllToOne(particle) {
       universalPush(particle, otherParticle, 1.6)
       //lightCircleLines(particle)
       //pull(red, red, redredPullForce, otherParticle)
-      pull(red, green, 1, otherParticle)
+      //pull(red, green, 1, otherParticle)
       //push(blue, blue, 0.5, otherParticle)
       //push(blue, red, 0.5, otherParticle)
       //push(blue, green, 0.5, otherParticle)
