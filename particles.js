@@ -10,7 +10,7 @@ circleTemplate.beginFill('white')
 circleTemplate.drawCircle(0, 0, 2)
 circleTemplate.endFill()
 
-function newLine(particle) {
+export function createLine(particle) {
   const grafics = new Graphics()
 
   grafics.lineStyle(5, 'yellow', 1)
@@ -32,8 +32,8 @@ function createCircle(particle) {
 
 export function createParticle(color, numP) {
   let particle = {
-    x: numP * 350, //canvasWidth,
-    y: canvasHeight / 2, //canvasHeight,
+    x: numP * 450, //canvasWidth,
+    y: numP * 500, //canvasHeight,
     r: 100,
     vx: 0,
     vy: 0,
@@ -44,7 +44,7 @@ export function createParticle(color, numP) {
   particle.pixiCircle = partikleCircle
   app.stage.addChild(partikleCircle)
 
-  const partikleLine = newLine(particle)
+  const partikleLine = createLine(particle)
   particle.pixiLine = partikleLine
   app.stage.addChild(partikleLine)
   console.log('line:', partikleLine)

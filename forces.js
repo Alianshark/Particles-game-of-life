@@ -1,6 +1,6 @@
 import { Graphics } from './lib/pixi.mjs'
-import { particles } from './particles.js'
-import { canvasWidth, canvasHeight } from './manager.js'
+import { particles, createLine } from './particles.js'
+import { canvasWidth, canvasHeight, app } from './manager.js'
 export const universalPushForceRange = 50
 export const forceConstant = 10
 const colorForceRange = 100
@@ -30,10 +30,17 @@ function getDistToScreenEdges(particle) {
 function applyForce(particle, otherParticle, sila, range) {
   applyForceNaEkrane()
   applyForceCherezEkran()
-  particle.pixiLine.x = particle.x
-  particle.pixiLine.y = particle.y
+
   console.log('position.x:', particle.x)
   console.log('position.y:', particle.y)
+  app.stage.removeChild(particle.pixiLine)
+  particle.pixiLine.destroy()
+  const newLine = createLine(particle)
+  particle.pixiLine = newLine
+  app.stage.addChild(newLine)
+
+  particle.pixiLine.x = particle.x
+  particle.pixiLine.y = particle.y
   particle.pixiLine.moveTo(0, 0)
   particle.pixiLine.lineTo(
     otherParticle.x - particle.x,
