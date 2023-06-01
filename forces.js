@@ -73,8 +73,8 @@ function applyForce(particle, otherParticle, sila, range) {
     const otherParticleDist = getDistToScreenEdges(particle)
     if (particle.x > otherParticle.x) {
       const virtualParticleE = {
-        x: 0 + canvasWidth,
-        y: 0 + canvasHeight,
+        x: canvasWidth - particle.x,
+        y: canvasHeight - particle.y,
       }
       const distX = virtualParticleE.x - otherParticle.x
       const distY = virtualParticleE.y - otherParticle.y
