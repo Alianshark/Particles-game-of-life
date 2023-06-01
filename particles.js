@@ -46,6 +46,12 @@ export function createParticle(color, numP) {
   particle.pixiLine = partikleLine
   app.stage.addChild(partikleLine)
   //console.log('line:', partikleLine)
+  const virtualParticle = createVirtualParticle(particle)
+  console.log('virtualparticle:', virtualParticle)
+  console.log('virtualparticleX:', virtualParticle.pixiCircle.x)
+  console.log('virtualparticleY:', virtualParticle.pixiCircle.y)
+  particle.virtualParticleE = virtualParticle
+  app.stage.addChild(virtualParticle.pixiCircle)
 
   return particle
 }
@@ -60,4 +66,14 @@ export function generateParticles(color, numParticles) {
 
     numP += 1
   }
+}
+
+export function createVirtualParticle(particle) {
+  const virtualParticleE = {
+    ...particle,
+    pixiCircle: createCircle(particle),
+    x: canvasWidth - particle.x,
+    y: canvasHeight - particle.y,
+  }
+  return virtualParticleE
 }
