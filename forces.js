@@ -33,8 +33,10 @@ function applyForce(particle, otherParticle, sila, range) {
 
   console.log('position.x:', particle.x)
   console.log('position.y:', particle.y)
-  app.stage.removeChild(particle.pixiLine)
-  particle.pixiLine.destroy()
+  if (particle.pixiLine) {
+    app.stage.removeChild(particle.pixiLine)
+    particle.pixiLine.destroy()
+  }
   const newLine = createLine(particle)
   particle.pixiLine = newLine
   app.stage.addChild(newLine)

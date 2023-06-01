@@ -45,8 +45,10 @@ function gameLoop() {
 function renderPixiParticle(particle) {
   particle.pixiCircle.x = particle.x
   particle.pixiCircle.y = particle.y
-  particle.pixiLine.x = particle.x
-  particle.pixiLine.y = particle.y
+  if (particle.pixiLine) {
+    particle.pixiLine.x = particle.x
+    particle.pixiLine.y = particle.y
+  }
 }
 
 function measureFps() {
