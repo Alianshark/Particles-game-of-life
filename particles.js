@@ -16,8 +16,6 @@ export function createLine(particle) {
   grafics.lineStyle(2, 'yellow', 1)
   grafics.position.x = particle.x
   grafics.position.y = particle.y
-  //grafics.moveTo(0, 0)
-  grafics.lineTo(0, 0)
   return grafics
 }
 function createCircle(particle) {
@@ -44,9 +42,9 @@ export function createParticle(color, numP) {
   particle.pixiCircle = partikleCircle
   app.stage.addChild(partikleCircle)
 
-  //const partikleLine = createLine(particle)
-  //particle.pixiLine = partikleLine
-  //app.stage.addChild(partikleLine)
+  const partikleLine = createLine(particle)
+  particle.pixiLine = partikleLine
+  app.stage.addChild(partikleLine)
   //console.log('line:', partikleLine)
 
   return particle
